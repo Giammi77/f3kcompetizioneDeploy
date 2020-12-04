@@ -1,0 +1,42 @@
+.selected_{
+    background-color:white;
+    font-size: 40px;
+    text-align: center;
+}
+
+.selected_minutes .minutes{
+    background-color:yellow;
+    font-size: 40px;
+    text-align: center;
+}
+
+.selected_seconds .seconds{
+    background-color:yellow;
+    font-size: 40px;
+    text-align: center;
+}
+
+.selected_tenths .tenths{
+    background-color:yellow;
+    font-size: 40px;
+    text-align: center;
+}
+
+
+
+.minutes, .seconds, .tenths {
+    width:70px;
+    margin:3px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.btn_digit{
+    text-align: center;
+    font-size: 40px ;
+    margin:0px;
+    height:80px;
+    width:80px;
+    padding: 0px;
+    
+}
