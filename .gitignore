@@ -102,9 +102,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-instances/andry/site/_static
-instances/andry/site/data/_users
-instances/andry/site/*
+instances/myf3k/site/_static
+instances/myf3k/site/data/_users
+instances/myf3k/site/*
 *.db
-instances/andry/data/*
-instances/andry/config/instanceconfig.xml
+instances/myf3k/data/*
