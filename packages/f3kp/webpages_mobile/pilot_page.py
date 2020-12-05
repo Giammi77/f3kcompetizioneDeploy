@@ -70,11 +70,11 @@ class GnrCustomWebPage(object):
         self.pilot_views(tc_pilot_views)
 
         if not competition_id:
-            self.message(center,'THERE IS NOT COMPETITION AVALABLE')
+            self.message(center,'THERE IS NOT COMPETITION AVAILABLE')
             return
 
         if not combination_id_for_entry_time :
-            self.message(center,'ENTRY TIME NOT AVALABLE, YOU ARE NOT IN THIS TASK')
+            self.message(center,'ENTRY TIME NOT AVAILABLE, YOU ARE NOT IN THIS TASK')
             return
 
         self.flight_time_view(center)
