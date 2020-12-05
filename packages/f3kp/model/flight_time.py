@@ -34,10 +34,12 @@ class Table(object):
                             where='$combination_id= :combination_id',
                             combination_id=combination_id).fetch()
         flyed=0
+        number_flights=0
         for f in flyed_time:
+            number_flights+=1
             flyed+=f['flight_time']
   
-        if record['_row_count']<=r.maximum_flights:
+        if number_flights<r.maximum_flights:
             record['save']=True
         else:
             record['save']=False
