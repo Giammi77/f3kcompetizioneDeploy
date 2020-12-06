@@ -21,7 +21,9 @@ class GnrCustomWebPage(object):
         pane.thFormHandler(table='f3kp.pilot',
                             datapath='main.profile',
                             formResource = 'FormPilotPage',
-                            startKey='=main.current_pilot_id')
+                            startKey='=main.current_pilot_id',
+                            addrow=False,delrow=False
+                            )
     def mainToolbar(self,pane):
         bar = pane.slotToolbar('2,pageTitle,*,logoutButton,2')
         bar.pageTitle.div('^.current_full_name',font_weight='bold')
