@@ -119,6 +119,7 @@ class FormPilotPage(Form):
                                         formResource='Form_from_pilot',
                                         condition='@registration.pilot_id=:pr_pilot_id',
                                         condition_pr_pilot_id='^main.current_pilot_id',
-                                        condition_onStart=True)
+                                        condition_onStart=True,addrow=False,delrow=False
+                                        )
     def th_options(self):
         return dict(showtoolbar=False,autoSave=False)
