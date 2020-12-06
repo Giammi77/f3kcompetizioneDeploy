@@ -62,6 +62,7 @@ class GnrCustomWebPage(object):
         bc.data('.current_full_name', full_name)
         bc.data('.current_competition_id', competition_id)  
         bc.data('.current_combination', current_combination_id)
+        bc.data('.combination_id_for_entry',combination_id_for_entry_time)
         bc.data('.combination_name', combination_name)
         bc.data('.task_description',task_description)
 
@@ -200,7 +201,7 @@ class GnrCustomWebPage(object):
                             this.setRelativeData('.selected_','selected_');
                          """,fire='^.clear_display')
 
-        cp.dataRpc('.clear_display',self.addTime,combination_id='=.current_combination',subscribe_saveTime=True)
+        cp.dataRpc('.clear_display',self.addTime,combination_id='=.combination_id_for_entry',subscribe_saveTime=True)
         
         cp.script("""var digit_manager = {
             store : function(path_to_store,digit){
