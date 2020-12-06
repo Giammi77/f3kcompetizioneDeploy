@@ -68,6 +68,10 @@ class ViewFromPilot(View):
 
     @public_method
     def signIn(self,competition_id=None,pilot_id=None):
+        state_code=self.db.table('f3kp.competition').record(competition_id,mode='bag')
+        if not state_code['state_code']=='A':
+            return
+
         f_registration=self.db.table('f3kp.registration').query(column='$competition_id,$pilot_id',
                             where ='$competition_id=:pr_competition_id AND $pilot_id=:pr_pilot_id',
                             pr_competition_id=competition_id,
@@ -83,7 +87,7 @@ class ViewFromPilot(View):
         record['weight'] = 100
         tbl_registration.insert(record)
         self.db.commit()
-        sleep(1)
+        sleep(3)
 
 class ViewMyCompetition(View):
     def th_struct(self,struct):
@@ -106,12 +110,10 @@ class Form(BaseComponent):
         fb.field('date')
         fb.field('state_code')
  
-
         self.registration(center_tb)
         self.competition_task(center_tb)
         self.combination(center_tb)
         self.ranking(center_tb)
-
 
     def registration(self,tc):
         tc.contentPane(title='!![en]Registration Pilot').inlineTableHandler(relation='@registration',
@@ -176,14 +178,6 @@ class Form_from_pilot(Form):
                                             condition_competition_id='^#FORM.pkey',
                                             condition_onStart=True,title="!![en]Ranking",
                                             grid_showLineNumber=True)
-
-
-
-
-
-
-
-
 
 
     def th_top_custom(self,top):
