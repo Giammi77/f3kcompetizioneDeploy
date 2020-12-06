@@ -107,3 +107,4 @@ instances/myf3k/site/data/_users
 instances/myf3k/site/*
 *.db
 instances/myf3k/data/*
+instances/myf3kloc*
