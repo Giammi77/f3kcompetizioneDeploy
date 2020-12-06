@@ -136,7 +136,9 @@ class Form(BaseComponent):
     def ranking(self,tc):
         tc.contentPane(title='!![en]Ranking').plainTableHandler(table='f3kp.registration',viewResource='ViewFromRanking',
                                             datapath='ranking',condition_onStart=True,title="!![en]Ranking",
-                                            grid_showLineNumber=True)
+                                            grid_showLineNumber=True,
+                                            condition='$competition_id = :competition_id',
+                                            condition_competition_id='^#FORM.pkey',)
 
     def th_options(self):
         return dict(dialog_height='600px', dialog_width='600px')
@@ -167,7 +169,13 @@ class Form_from_pilot(Form):
                                             viewResource='View_from_contest_director',
                                             condition_onStart=True,title="!![en]combination")
 
-
+    def ranking(self,tc):
+        tc.contentPane(title='!![en]Ranking').plainTableHandler(table='f3kp.registration',viewResource='ViewFromRanking',
+                                            datapath='ranking',
+                                            condition='$competition_id = :competition_id',
+                                            condition_competition_id='^#FORM.pkey',
+                                            condition_onStart=True,title="!![en]Ranking",
+                                            grid_showLineNumber=True)
 
 
 
