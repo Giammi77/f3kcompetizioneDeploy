@@ -158,6 +158,26 @@ class Form_from_pilot(Form):
         self.combination(center_tb)
         self.ranking(center_tb)
 
+    def combination(self,tc):
+        tc.contentPane(title='!![en]Combination').plainTableHandler(table='f3kp.combination',
+                                            formResource='FormCombination',
+                                            datapath='combination',
+                                            condition='$competition_id = :competition_id',
+                                            condition_competition_id='^#FORM.pkey',
+                                            viewResource='View_from_contest_director',
+                                            condition_onStart=True,title="!![en]combination")
+
+
+
+
+
+
+
+
+
+
+
+
     def th_top_custom(self,top):
          bar=top.bar.replaceSlots('#','') 
 
