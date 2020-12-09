@@ -37,8 +37,9 @@ class ViewFromRanking(View):
         r.fieldcell('pilot_id',width='15em')
         r.fieldcell('total_score',dtype='score',text_align="right")
         # r.fieldcell('competition_task__row_count')
+
     def th_order(self):
-        return 'score:d'
+        return 'score:a'
     def th_options(self):
          return dict(grid_showLineNumber=True)
 

@@ -99,7 +99,7 @@ class ViewMyCompetition(View):
         r.fieldcell('state_code',edit=False)
 
 class Form(BaseComponent):
-
+    #FORM FROM CONTEST DIRECTOR
     def th_form(self, form):
         bc=form.center.borderContainer()
         top=bc.contentPane(region='top',height='15%',datapath='.record')
@@ -121,18 +121,17 @@ class Form(BaseComponent):
                         picker='pilot_id') 
 
     def competition_task(self,tc):
-
         tc.contentPane(title='!![en]Task').inlineTableHandler(relation='@competition_task',
                         viewResource='Viewcompetition_taskFromCompetition',
                         picker='task_code',picker_field='task_code') 
 
     def combination(self,tc):
         tc.contentPane(title='!![en]Combination').dialogTableHandler(table='f3kp.combination',
+                                            viewResource='View_from_contest_director',
                                             formResource='FormCombination',
                                             datapath='combination',
                                             condition='$competition_id = :competition_id',
                                             condition_competition_id='^#FORM.pkey',
-                                            viewResource='View_from_contest_director',
                                             condition_onStart=True,title="!![en]combination")
         
     def ranking(self,tc):
@@ -146,6 +145,7 @@ class Form(BaseComponent):
         return dict(dialog_height='600px', dialog_width='600px')
 
 class Form_from_pilot(Form):
+    #FORM FOR DESKTOP 
     def th_form(self, form):
         bc=form.center.borderContainer()
         top=bc.contentPane(region='top',height='15%',datapath='.record')
@@ -155,8 +155,6 @@ class Form_from_pilot(Form):
         fb.field('venue',readOnly=True)
         fb.field('date',readOnly=True)
         fb.field('state_code',readOnly=True)
- 
-
         # self.registration(center_tb)
         # self.competition_task(center_tb)
         self.combination(center_tb)

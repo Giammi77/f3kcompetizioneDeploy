@@ -25,9 +25,36 @@ class View(BaseComponent):
 
     def th_query(self):
         return dict(column='combination_name', op='contains', val='')
+    # ******************************SOLO ESEMPIO CODICE*****************************************************************************
+    # def th_sections_zona(self):
+    #     return [dict(code='nord',caption='!![it]Nord',condition='@sede_id.zona ILIKE :zona',
+    #             condition_zona='%%Nord%%'),
+    #             dict(code='centro',caption='!![it]Centro',condition='@sede_id.zona ILIKE :zona',
+    #             condition_zona='Centro'),
+    #             dict(code='sud',caption='!![it]Sud',condition='@sede_id.zona ILIKE :zona',
+    #             condition_zona='Sud'),
+    #             dict(code='isole',caption='!![it]Isole',condition='@sede_id.zona ILIKE :zona',
+    #             condition_zona='Isole')]
+
+    # @public_method(remote_zona='^.zona.current')
+    # def sectionSede(self,zona=None):
+    #     f = self.db.table('lrn.sede').query(where='$zona ILIKE :zona',zona=zona).fetch()
+    #     return [dict(code='sed_%(id)s' %r, caption=r['nome'],condition='$sede_id=:sd',condition_sd=r['id']) for r in f]
+    #********************************************************************************************************************************
+    # def th_view(self,view): MI PIACEREBBE POTER RINTRACCIARE competition_id da usare come condizione where per la fetch dei round
+    #     view.data('.dati','')
+
+    
+    def th_sections_round(self):
+        f=self.db.table('f3kp.competition_task').query("""_row_count""",group_by='_row_count').fetch()
+        # f=self.db.table('f3kp.competition_task').query(where='$competition_id ILIKE :competition_id',
+        #                                     competition_id='').fetch()
+        return [dict(code='task_%(_row_count)s'%r,caption=r['_row_count'],condition='$competition_task__row_count=:rc',
+                condition_rc=r['_row_count'])for r in f]
+
 
     def th_top_toolbar(self,top):
-        round=top.slotToolbar('1,lbl,2,sections@competition_task_id,*,allow_time',childname='round',_position='>bar')
+        round=top.slotToolbar('1,lbl,2,sections@round,*,allow_time',childname='round',_position='>bar')
         round.lbl.div('ROUND')
 
         group=top.slotToolbar('1,lbl,2,sections@task_group_code,*',childname='group',_position='>round')
