@@ -46,9 +46,11 @@ class View(BaseComponent):
 
     
     def th_sections_round(self):
-        f=self.db.table('f3kp.competition_task').query("""_row_count""",group_by='_row_count').fetch()
+
+        f=self.db.table('f3kp.competition_task').query("""_row_count""",group_by='_row_count',order_by='_row_count ASC').fetch()
         # f=self.db.table('f3kp.competition_task').query(where='$competition_id ILIKE :competition_id',
         #                                     competition_id='').fetch()
+        # f=self.db.table('f3kp.competition_task').query('SELECT MAX($_row_count)').fetch()
         return [dict(code='task_%(_row_count)s'%r,caption=r['_row_count'],condition='$competition_task__row_count=:rc',
                 condition_rc=r['_row_count'])for r in f]
 
