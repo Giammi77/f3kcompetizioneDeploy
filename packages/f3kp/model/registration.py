@@ -24,7 +24,7 @@ class Table(object):
         # tbl.aliasColumn('total_score','@competition_id.@competition_task.@combination.total_score',name_long='!![en]Total Score')
         tbl.formulaColumn('total_score',select=dict(table='f3kp.combination',
                                             columns='MAX($total_score)',
-                                            where='$pilot_id=#THIS.pilot_id'),name_long='!![en]Total Score',
+                                            where='$pilot_id=#THIS.pilot_id AND $competition_id=#THIS.competition_id'),name_long='!![en]Total Score',
                                             dtype='score')
 
         tbl.formulaColumn('competition_state_code',select=dict(table='f3kp.competition',

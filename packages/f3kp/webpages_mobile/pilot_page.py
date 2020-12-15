@@ -16,10 +16,10 @@ class GnrCustomWebPage(object):
 
         show_edit_flight_time_pane ='63%'
         height_display_entry_time = '22%'
-        tb=pane.tabContainer(tabPosition="top")
+        tb=pane.tabContainer(tabPosition="top",selectedPage='^entry.selectedPage',_class='tab_mobile')
 
-        bc = tb.borderContainer(title='ENTRY FLIGHT TIMES',datapath='entry')
-        tc_pilot_views=tb.tabContainer(title='RESULTS',tabPosition ='top')
+        bc = tb.borderContainer(title='ENTRY FLIGHT TIMES',datapath='entry',pageName='entryFlightTimes')
+        tc_pilot_views=tb.tabContainer(title='RESULTS',tabPosition ='top',selectedPage='^entry.selectedResults',pageName='results')
         top=bc.contentPane(region='top')                                                # top bars to show data user information
         center=bc.contentPane(region='center')                                          # grid to show flight time almost inserted
         bottom=bc.contentPane(region='bottom', height=show_edit_flight_time_pane)       # gui for show and edit flight time
@@ -66,6 +66,13 @@ class GnrCustomWebPage(object):
         bc.data('.combination_name', combination_name)
         bc.data('.task_description',task_description)
 
+        # THIS DATACONTROLLER USED FOR KEEP UPDATE THE DATA BETWEEN TABS
+        bc.dataController("""var competition_id= genro.getData('entry.current_competition_id');
+                            genro.setData('entry.current_competition_id','');
+                            genro.setData('entry.current_competition_id',competition_id);
+                        """
+                            ,fire='^.selectedResults',fire_2='^.selectedPage')
+
         self.logoutToolbar(top)
         self.entryToolbar(top)
         self.pilot_views(tc_pilot_views)
@@ -85,10 +92,17 @@ class GnrCustomWebPage(object):
         bc.dataController("""
                             if(row_count){
                                 this.setRelativeData('.number_flight_time',row_count.toString());
-                                this.setRelativeData('.minutes',''+minutes);
-                                this.setRelativeData('.seconds',''+seconds);
-                                this.setRelativeData('.tenths',''+tenths);
+                                if(time!=0){
+                                    this.setRelativeData('.minutes',''+minutes);
+                                    this.setRelativeData('.seconds',''+seconds);
+                                    this.setRelativeData('.tenths',''+tenths);
                                 }
+                                else {
+                                this.setRelativeData('.minutes','-');
+                                this.setRelativeData('.seconds','-');
+                                this.setRelativeData('.tenths','-');
+                                }
+                            }
                             else{
                                 this.setRelativeData('.number_flight_time','N');
                                 this.setRelativeData('.minutes','-');
@@ -96,7 +110,8 @@ class GnrCustomWebPage(object):
                                 this.setRelativeData('.tenths','-');
                             };
                             """, row_count='^.selected_row_count',
-                            minutes='^.selected_minutes', seconds='^.selected_seconds',tenths='^.selected_tenths')
+                            minutes='^.selected_minutes', seconds='^.selected_seconds',tenths='^.selected_tenths',
+                            time='^.selected_flight_time')
 
 
     def flight_time_view(self,center):
@@ -118,6 +133,7 @@ class GnrCustomWebPage(object):
                         grid_selected_minutes='entry.selected_minutes',
                         grid_selected_seconds='entry.selected_seconds',
                         grid_selected_tenths='entry.selected_tenths',
+                        grid_selected_flight_time='entry.selected_flight_time'
                         )
 
     def show_edit_time(self,cp):
@@ -288,7 +304,7 @@ class GnrCustomWebPage(object):
 
     def pilot_views(self,tc):
 
-        tc.contentPane(title='ROUNDS').plainTableHandler(table='f3kp.combination',datapath='combination',
+        tc.contentPane(title='ROUNDS',pageName='rounds').plainTableHandler(table='f3kp.combination',datapath='combination',
                                         title='Combinations',
                                         viewResource='View_from_pilot_mobile',
                                         condition="$competition_id=:id",
@@ -297,7 +313,7 @@ class GnrCustomWebPage(object):
                                         font_size = '13px',
                                         )
             
-        tc.contentPane(title='RANKING').plainTableHandler(table='f3kp.registration',
+        tc.contentPane(title='RANKING',pageName='ranking').plainTableHandler(table='f3kp.registration',
                                         title='Ranking',
                                         datapath='ranking',
                                         viewResource='ViewFromRanking',

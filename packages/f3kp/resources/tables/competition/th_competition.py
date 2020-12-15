@@ -139,7 +139,8 @@ class Form(BaseComponent):
                                             datapath='ranking',condition_onStart=True,title="!![en]Ranking",
                                             grid_showLineNumber=True,
                                             condition='$competition_id = :competition_id',
-                                            condition_competition_id='^#FORM.pkey',)
+                                            condition_competition_id='^#FORM.pkey',
+                                            liveUpdate=True)
 
     def th_options(self):
         return dict(dialog_height='600px', dialog_width='600px')

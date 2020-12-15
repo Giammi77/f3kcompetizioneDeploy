@@ -39,7 +39,7 @@ class ViewFromRanking(View):
         # r.fieldcell('competition_task__row_count')
 
     def th_order(self):
-        return 'score:a'
+        return 'total_score:d'
     def th_options(self):
          return dict(grid_showLineNumber=True)
 

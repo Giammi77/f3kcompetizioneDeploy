@@ -22,8 +22,6 @@
     text-align: center;
 }
 
-
-
 .minutes, .seconds, .tenths {
     width:70px;
     margin:3px;
@@ -39,4 +37,8 @@
     width:80px;
     padding: 0px;
     
+}
+
+.tab_mobile{
+    font-size:14px;
 }

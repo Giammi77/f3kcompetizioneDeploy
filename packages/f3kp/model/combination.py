@@ -90,7 +90,7 @@ class Table(object):
 
         tbl.formulaColumn('total_score',select=dict(table='f3kp.combination',
                                                     columns='SUM($score)',
-                                                    where='$pilot_id=#THIS.pilot_id'),
+                                                    where='$pilot_id=#THIS.pilot_id AND $competition_id=#THIS.competition_id'),
                                                     dtype='score',name_long='!![en]Total Score')
 
         tbl.aliasColumn('round_number','@competition_task_id._row_count',name_long='!![en]Round Number',name_short='!![en]Rnd.Nr.')
