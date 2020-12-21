@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <GenRoBag>
-	<db implementation="postgres" dbname="f3k" user="" password=""/>
+	<db implementation="postgres" dbname="f3k" /> <!--Se non necessari meglio rimuovere i parametri postgres dall'instanceconfig e usare quelli di default-->
 
 	<packages>
 		<gnrcore_sys pkgcode="gnrcore:sys"/>

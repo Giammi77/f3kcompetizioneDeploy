@@ -28,7 +28,7 @@ class GnrCustomWebPage(object):
         pilot_id,full_name = self.db.table('f3kp.pilot'
                                     ).readColumns(columns='$id,$full_name',
                                                   where='$user_id=:uid',
-                                                 uid=self.avatar.user_id)
+                                                 uid=self.rootenv['user_id’])
         try:
             competition_id = self.db.table('f3kp.registration'
                                         ).readColumns(columns='$competition_id',

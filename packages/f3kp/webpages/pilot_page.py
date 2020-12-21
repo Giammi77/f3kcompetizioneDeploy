@@ -7,7 +7,7 @@ class GnrCustomWebPage(object):
         pilot_id,full_name = self.db.table('f3kp.pilot'
                                     ).readColumns(columns='$id,$full_name',
                                                   where='$user_id=:uid',
-                                                 uid=self.avatar.user_id)
+                                                 uid=self.rootenv['user_id’])
         bc.data('.current_pilot_id', pilot_id)
         bc.data('.current_full_name', full_name)
  
@@ -37,8 +37,8 @@ class GnrCustomWebPage(object):
                             formResource = 'FormPilotPage',
                             startKey='^main.current_pilot_id',
                             addrow=False,delrow=False,
-                            liveUpdate=True
-                            )
+                            autoSave=True,      #usiamo l'autosave per poter salvare automaticamente i dati se il pilota compila i campi anagrafici
+                            liveUpdate=True)    #usiamo il liveUpdate per aggiornare automaticamente le competizioni una volta iscritti
     def mainToolbar(self,pane):
         bar = pane.slotToolbar('2,pageTitle,*,logoutButton,2')
         bar.pageTitle.div('^.current_full_name',font_weight='bold')
