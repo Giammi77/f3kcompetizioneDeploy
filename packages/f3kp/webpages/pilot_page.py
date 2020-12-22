@@ -7,16 +7,16 @@ class GnrCustomWebPage(object):
         pilot_id,full_name = self.db.table('f3kp.pilot'
                                     ).readColumns(columns='$id,$full_name',
                                                   where='$user_id=:uid',
-                                                 uid=self.rootenv['user_id’])
+                                                  uid=self.rootenv['user_id'])
         bc.data('.current_pilot_id', pilot_id)
         bc.data('.current_full_name', full_name)
  
         # THIS DATACONTROLLER USED FOR KEEP UPDATE THE DATA BETWEEN TABS
-        bc.dataController("""var pilot_id= genro.getData('main.current_pilot_id');
-                            genro.setData('main.current_pilot_id','');
-                            genro.setData('main.current_pilot_id',pilot_id);
-                        """
-                            ,fire='^.selectedPage')
+        #bc.dataController("""var pilot_id= genro.getData('main.current_pilot_id');
+        #                    genro.setData('main.current_pilot_id','');
+        #                    genro.setData('main.current_pilot_id',pilot_id);
+        #                """
+        #                    ,fire='^.selectedPage')
         
 
         self.mainToolbar(bc.contentPane(region='top'))
@@ -31,24 +31,23 @@ class GnrCustomWebPage(object):
 
 
     def profilePane(self,pane):
-        
         pane.thFormHandler(table='f3kp.pilot',
                             datapath='main.profile',
                             formResource = 'FormPilotPage',
                             startKey='^main.current_pilot_id',
                             addrow=False,delrow=False,
-                            autoSave=True,      #usiamo l'autosave per poter salvare automaticamente i dati se il pilota compila i campi anagrafici
-                            liveUpdate=True)    #usiamo il liveUpdate per aggiornare automaticamente le competizioni una volta iscritti
+                            autoSave=True)      #usiamo l'autosave per poter salvare automaticamente i dati se il pilota compila i campi anagrafici
+    
     def mainToolbar(self,pane):
         bar = pane.slotToolbar('2,pageTitle,*,logoutButton,2')
         bar.pageTitle.div('^.current_full_name',font_weight='bold')
         bar.logoutButton.button('Logout',action='genro.logout();')
         
-
     def competitionPane(self,pane):
         pane.plainTableHandler(table='f3kp.competition',
                                 datapath='main.competition',
                                 viewResource='ViewFromPilot',
                                 condition_onStart=True)
+    
     def currentCompetition(self,pane):
         pass

@@ -86,6 +86,7 @@ class ViewFromPilot(View):
         record['pilot_id'] = pilot_id
         record['weight'] = 100
         tbl_registration.insert(record)
+        self.db.table('f3kp.competition').notifyDbUpdate(record['competition_id'])
         self.db.commit()
         sleep(3)
 
@@ -97,7 +98,7 @@ class ViewMyCompetition(View):
         r.fieldcell('venue',edit=False)
         r.fieldcell('date',edit=False)
         r.fieldcell('state_code',edit=False)
-
+    
 class Form(BaseComponent):
     #FORM FROM CONTEST DIRECTOR
     def th_form(self, form):
@@ -117,7 +118,7 @@ class Form(BaseComponent):
 
     def registration(self,tc):
         tc.contentPane(title='!![en]Registration Pilot').inlineTableHandler(relation='@registration',
-                        viewResource='ViewRegistrationFromCompetition',
+                        viewResource='ViewRegistrationFromCompetition', liveUpdate=True,    #usiamo il liveUpdate per aggiornare automaticamente le competizioni una volta iscritti
                         picker='pilot_id') 
 
     def competition_task(self,tc):
