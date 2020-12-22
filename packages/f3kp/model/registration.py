@@ -32,5 +32,7 @@ class Table(object):
                                             where='$id=#THIS.competition_id'))
        
     def defaultValues(self):
-        return dict(weight=100)
+        return dict(weight=100)        
+
+
 
