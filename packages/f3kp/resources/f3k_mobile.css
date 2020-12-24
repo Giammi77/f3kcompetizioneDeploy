@@ -37,3 +37,23 @@
     width:80px;
     padding: 0px;    
 }
+
+.tab_mobile .dijitTab {
+    height:40px; 
+    font-size: 20px!important;
+    border-radius:unset!important;
+    background:white!important;    }
+span.tabLabel {
+    vertical-align: middle!important; }
+.tab_mobile .dijitTabChecked, .multibutton_selected {
+    background: #1e3055!important;
+    color: white!important;   }
+.slotbar_toolbar_standard {
+    background: white!important;
+    font-size:16px; }
+.th_view_toolbar.slotbar {
+    display:none; }
+.multibutton_container, .multibutton {
+    height:auto;
+    background-color:white;
+    border-radius:unset!important;    }
