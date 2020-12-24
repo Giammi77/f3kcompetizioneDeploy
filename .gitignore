@@ -108,3 +108,6 @@ instances/myf3k/site/*
 *.db
 instances/myf3k/data/*
 instances/myf3kloc*
+
+# ESERCIZI PYTHON
+packages/f3kp/lib/ESERCIZI CODICE PYTHON/*

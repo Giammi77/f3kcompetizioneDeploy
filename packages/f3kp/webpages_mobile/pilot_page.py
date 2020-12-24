@@ -7,8 +7,6 @@ class GnrCustomWebPage(object):
     py_requires = 'th/th:TableHandler'
     css_requires='f3k'
 
-
-
     def main(self,pane,**kwargs):
 
         ################################
