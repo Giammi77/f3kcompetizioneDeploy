@@ -5,7 +5,7 @@ from gnr.core.gnrdecorator import public_method
 
 class GnrCustomWebPage(object):
     py_requires = 'th/th:TableHandler'
-    css_requires='f3k'
+    css_requires='f3k_mobile'
 
 
 
@@ -28,7 +28,7 @@ class GnrCustomWebPage(object):
         pilot_id,full_name = self.db.table('f3kp.pilot'
                                     ).readColumns(columns='$id,$full_name',
                                                   where='$user_id=:uid',
-                                                 uid=self.rootenv['user_id’])
+                                                  uid=self.rootenv['user_id'])
         try:
             competition_id = self.db.table('f3kp.registration'
                                         ).readColumns(columns='$competition_id',
@@ -78,7 +78,7 @@ class GnrCustomWebPage(object):
         self.pilot_views(tc_pilot_views)
 
         if not competition_id:
-            self.message(center,'THERE IS NOT COMPETITION AVAILABLE')
+            self.message(center,'THERE IS NO COMPETITION AVAILABLE')
             return
 
         if not combination_id_for_entry_time :
