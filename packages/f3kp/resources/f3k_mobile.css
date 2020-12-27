@@ -24,6 +24,7 @@
 
 .minutes, .seconds, .tenths {
     width:70px;
+    height:40px;
     margin:3px;
     border-radius: 10px;
     border: 1px solid gray;
@@ -31,15 +32,16 @@
 
 .btn_digit{
     text-align: center;
-    font-size: 40px ;
+    font-size: 45px ;
     margin:0px;
-    height:80px;
-    width:80px;
-    padding: 0px;    
+    height:100%;
+    width:100%;  
+    border-collapse: collapse; 
+    box-sizing: border-box;
 }
 
 .tab_mobile .dijitTab {
-    height:40px; 
+    height:30px; 
     font-size: 20px!important;
     border-radius:unset!important;
     background:white!important;    }
@@ -48,11 +50,15 @@ span.tabLabel {
 .tab_mobile .dijitTabChecked, .multibutton_selected {
     background: #1e3055!important;
     color: white!important;   }
+
 .slotbar_toolbar_standard {
     background: white!important;
-    font-size:16px; }
+    
+    font-size:14px; }
+    
 .th_view_toolbar.slotbar {
-    display:none; }
+    display:None; }
+
 .multibutton_container, .multibutton {
     height:auto;
     background-color:white;

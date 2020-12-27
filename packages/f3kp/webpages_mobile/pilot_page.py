@@ -12,8 +12,8 @@ class GnrCustomWebPage(object):
         ################################
         # TO DO preference for mobile
 
-        show_edit_flight_time_pane ='63%'
-        height_display_entry_time = '22%'
+        show_edit_flight_time_pane ='54%'
+        height_display_entry_time = '25%'
         tb=pane.tabContainer(tabPosition="top",selectedPage='^entry.selectedPage',_class='tab_mobile')
 
         bc = tb.borderContainer(title='ENTRY FLIGHT TIMES',datapath='entry',pageName='entryFlightTimes')
@@ -173,40 +173,41 @@ class GnrCustomWebPage(object):
                   connect_touchstart="genro.setData('entry.selected_','selected_tenths')")
 
     def entry_time(self,cp):
-        time_table=cp.table(margin='auto',_class='btn_digit',border_spacing=0,border_collapse='collapse')
-        tbody=time_table.tbody(align='center')
+        time_table=cp.table(margin='auto')
+        tbody=time_table.tbody()
+       
         row=tbody.tr()
-        cel=row.td(padding='0px')
-        cel.button('7',action="genro.publish('insertDigit',{digit:7,selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('8',action="genro.publish('insertDigit',{digit:8,selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('9',action="genro.publish('insertDigit',{digit:9,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('6',_class='btn_digit',action="genro.publish('insertDigit',{digit:6,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('7',_class='btn_digit',action="genro.publish('insertDigit',{digit:7,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('8',_class='btn_digit',action="genro.publish('insertDigit',{digit:8,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('9',_class='btn_digit',action="genro.publish('insertDigit',{digit:9,selected_:'.selected_'})")
 
         row=tbody.tr()
-        cel=row.td(padding='0px')
-        cel.button('4',action="genro.publish('insertDigit',{digit:4,selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('5',action="genro.publish('insertDigit',{digit:5,selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('6',action="genro.publish('insertDigit',{digit:6,selected_:'.selected_'})")
-        
-        row=tbody.tr()
-        cel=row.td(padding='0px')
-        cel.button('1',action="genro.publish('insertDigit',{digit:1,selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('2',action="genro.publish('insertDigit',{digit:2,selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('3',action="genro.publish('insertDigit',{digit:3,selected_:'.selected_'})")
-    
+
+        cel=row.td()
+        cel.button('2',_class='btn_digit',action="genro.publish('insertDigit',{digit:2,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('3',_class='btn_digit',action="genro.publish('insertDigit',{digit:3,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('4',_class='btn_digit',action="genro.publish('insertDigit',{digit:4,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('5',_class='btn_digit',action="genro.publish('insertDigit',{digit:5,selected_:'.selected_'})")
+        cel=row.td()
+
 
         row=tbody.tr()
-        cel=row.td(padding='0px')
-        cel.button('0',action="genro.publish('insertDigit',{digit:0,selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('-',action="genro.publish('removeDigit',{selected_:'.selected_'})")
-        cel=row.td(padding='0px')
-        cel.button('+',action="""genro.publish('saveTime',{minutes:'^.minutes',seconds:'^.seconds',tenths:'^.tenths',
+        cel=row.td()
+        cel.button('1',_class='btn_digit',action="genro.publish('insertDigit',{digit:1,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('0',_class='btn_digit',action="genro.publish('insertDigit',{digit:0,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('-',_class='btn_digit',action="genro.publish('removeDigit',{selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('+',_class='btn_digit',action="""genro.publish('saveTime',{minutes:'^.minutes',seconds:'^.seconds',tenths:'^.tenths',
                                 selected_flight_time_id:'^.selected_flight_time_id'})""")
 
         cp.dataController("""this.setRelativeData('.minutes','-');
