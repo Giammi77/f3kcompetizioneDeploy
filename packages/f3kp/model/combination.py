@@ -38,7 +38,7 @@ class Table(object):
  
         tbl.formulaColumn('avg_weight',select=dict(table='f3kp.combination',
                                                     columns='AVG(weight)',
-                                                    where='$task_group_code=#THIS.task_group_code'),
+                                                    where='$task_group_code=#THIS.task_group_code AND  $competition_id=#THIS.competition_id'),
                                                     dtype='N', name_long='!![en]Average weight')
 
         tbl.formulaColumn('flight_1',select=dict(table='f3kp.flight_time',
