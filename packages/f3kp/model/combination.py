@@ -83,7 +83,7 @@ class Table(object):
 
         tbl.formulaColumn('time_flew_max',select=dict(table='f3kp.combination',
                                                     columns='MAX($time_flew)',
-                                                    where='$competition_task_id=#THIS.competition_task_id'),
+                                                    where='$competition_task_id=#THIS.competition_task_id AND $task_group_code=#THIS.task_group_code'),
                                                     dtype='N', name_long='!![en]Time flew max')
 
         tbl.formulaColumn('score',"$time_flew/$time_flew_max*1000",name_long='!![en]Score',dtype='score')
