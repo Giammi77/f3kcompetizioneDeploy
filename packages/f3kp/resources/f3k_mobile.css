@@ -23,8 +23,9 @@
 }
 
 .minutes, .seconds, .tenths {
-    width:70px;
-    height:40px;
+    text-align: center;
+    width:75px;
+    height:100%;
     margin:3px;
     border-radius: 10px;
     border: 1px solid gray;
@@ -32,10 +33,10 @@
 
 .btn_digit{
     text-align: center;
-    font-size: 45px ;
+    font-size: 40px ;
     margin:0px;
-    height:100%;
-    width:100%;  
+    height:75%;
+    width:75%;  
     border-collapse: collapse; 
     box-sizing: border-box;
 }
