@@ -24,8 +24,10 @@ class Table(object):
 
         tbl.column('user_id',size='22', group='_', name_long='!![en]User',unique=True
             ).relation('adm.user.id',one_one=True, 
-                    relation_name='student', 
+                    relation_name='pilot', 
                     mode='foreignkey', onDelete='raise')
+
+
 
         tbl.formulaColumn('full_name', "$last_name || ' ' || LEFT($first_name,1) || '.'",name_long='!![en]Full Name') 
         

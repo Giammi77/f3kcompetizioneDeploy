@@ -27,8 +27,8 @@ class Viewcompetition_taskFromCompetition(View):
         r.fieldcell('competition_id')
         r.fieldcell('task_code',edit=dict(edit=True,validate_notnull=True,hasDownArrow=True),
                     width='40em')
-        r.fieldcell('state_code',edit=dict(edit=True,hasDownArrow=True))
-        r.fieldcell('number_groups',edit=dict(edit=True,validate_notnull=True))
+        r.fieldcell('state_code',edit=dict(edit=True,hasDownArrow=True,validate_notnull=True,default_value='A'))
+        r.fieldcell('number_groups',edit=dict(edit=True,validate_notnull=True,default_value=1))
 
     def th_top_custom(self,top):
         bar=top.bar.replaceSlots('#','#,resourceActions,2') 
@@ -36,6 +36,7 @@ class Viewcompetition_taskFromCompetition(View):
         # bar.miobut.button('IMPORTA PRODOTTI',action='genro.publish("importa_prodotti",{selected:selected})',
         #                     selected='=#scelta_tipo.checked')
         # bar.mioPicker.button('Picker Prodotti',action='genro.publish("mostra_picker")')
+    
 
 class Form(BaseComponent):
 

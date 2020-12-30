@@ -3,21 +3,21 @@
 from gnr.web.batch.btcaction import BaseResourceAction
 import random as rnd 
 
-caption='Genera matrici' #nome del menu del batch
+caption='Make Managment' #nome del menu del batch
 tags='admin' #autorizzazione al batch
-description='Genera le matrici per le task' #nome più completo
+description='Make list of contest managment' #nome più completo
 
 class Main(BaseResourceAction):
     batch_prefix = 'AS'
-    batch_title = 'Genera Martrici'
-    batch_cancellable=True
+    batch_title = 'Contest Managment'
+    batch_cancellable=False
 
     def do(self):
         #per ottentere i valori dei parametri richiersti self.batch_parameters
         #per ottenere i record selezionati s=get_selection poi s.data()
         #
         #OTTENGO LE TASK SELEZIONATE GENERARE LE MATRICI
-        selection=self.get_selection(columns='competition_id,id,task_code,state_code,number_groups')
+        selection=self.get_selection(columns='competition_id,id,task_code,state_code,number_groups,_row_count')
         
         #PER OGNI TASK TENGO DA PARTE I DATI DELLA TASK IN CASO DI NECESSITA'
         for e in selection:
@@ -26,8 +26,14 @@ class Main(BaseResourceAction):
             competition_task_id=e.get('id')
             end_task=e.get('state_code')
             number_groups=e.get('number_groups')
+           
             
-            
+            #SE ESISTE GIA' UNA COMBINAZIONE PER QUESTA TASK NON LA GENERO 
+            f=self.db.table('f3kp.combination').query(columns='competition_task_id',
+            where='$competition_task_id= :competition_task_id',competition_task_id=competition_task_id).fetch()
+            if  f:
+                break
+
             #SE LA TASK E' GIA ULTIMATA LA SALTO SALTO 
             if end_task == 'E':
             
@@ -41,7 +47,7 @@ class Main(BaseResourceAction):
 
             diz_piloti,lista_piloti_disponibili,peso_medio,totale_piloti=self.prepara_dati(f)
             piloti_per_gruppo=int(totale_piloti/number_groups)
-            limit=0.001
+            limit=0.0001
 
             # Abbinamenti gruppi task
             while True:
@@ -116,8 +122,8 @@ class Main(BaseResourceAction):
         return diz_piloti,lista_piloti_disponibili,float(peso_medio),totale_piloti
 
     def abbinamenti(self,lista_piloti_candidati,piloti_per_gruppo):
-        if lista_piloti_candidati.__len__()==piloti_per_gruppo:
-            return lista_piloti_candidati
+        # if lista_piloti_candidati.__len__()==piloti_per_gruppo:
+        #     return lista_piloti_candidati !!! controllare che non serva !!
         piloti_abbinati=[]
         indice_max_piloti_candidati=lista_piloti_candidati.__len__()-1
         

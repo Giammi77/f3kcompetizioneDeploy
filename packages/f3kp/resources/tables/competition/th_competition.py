@@ -13,6 +13,7 @@ class View(BaseComponent):
         r.fieldcell('venue')
         r.fieldcell('date')
         r.fieldcell('state_code')
+        
 
 
     def th_order(self):
@@ -105,16 +106,21 @@ class Form(BaseComponent):
         bc=form.center.borderContainer()
         top=bc.contentPane(region='top',height='15%',datapath='.record')
         center_tb=bc.tabContainer(region='center')
-        fb = top.formbuilder(cols=3, border_spacing='4px')
+        fb = top.formbuilder(margin_left='20px',margin_right='30px'
+                            ,cols=4,cols_width='auto',fld_width='90%')
         fb.field('name')
         fb.field('venue')
         fb.field('date')
         fb.field('state_code')
- 
+        fb.field('short_note',colspan=3)
+        fb.field('preparation_time') #,validate_notnull=True lo fa solo in questa form o in quelle ereditate?
+        
         self.registration(center_tb)
         self.competition_task(center_tb)
         self.combination(center_tb)
         self.ranking(center_tb)
+        self.managment(center_tb)
+        self.competition_informations(center_tb)
 
     def registration(self,tc):
         tc.contentPane(title='!![en]Registration Pilot').inlineTableHandler(relation='@registration',
@@ -142,9 +148,22 @@ class Form(BaseComponent):
                                             condition='$competition_id = :competition_id',
                                             condition_competition_id='^#FORM.pkey',
                                             liveUpdate=True)
+    # def th_top_custom(self,top):
+    #      bar=top.bar.replaceSlots('#','save') 
+    def managment(self,tc):
+        tc.contentPane(title='!![en]Managment').plainTableHandler(table='f3kp.managment',viewResource='View',
+                                            datapath='managment',
+                                            condition='$competition_id = :competition_id',
+                                            condition_competition_id='^#FORM.pkey',
+                                            condition_onStart=True,title="!![en]Managment",)
+                                            # grid_showLineNumber=True)
+
+    def competition_informations(self,tc):
+        tc.contentPane(title='!![en]Competition Informations').ckeditor(value='^.competition_informations')
+
 
     def th_options(self):
-        return dict(dialog_height='600px', dialog_width='600px')
+        return dict(dialog_height='600px', dialog_width='600px',delrow=False,addrow=False)
 
 class Form_from_pilot(Form):
     #FORM FOR DESKTOP 
@@ -161,6 +180,7 @@ class Form_from_pilot(Form):
         # self.competition_task(center_tb)
         self.combination(center_tb)
         self.ranking(center_tb)
+        
 
     def combination(self,tc):
         tc.contentPane(title='!![en]Combination').plainTableHandler(table='f3kp.combination',
@@ -178,6 +198,7 @@ class Form_from_pilot(Form):
                                             condition_competition_id='^#FORM.pkey',
                                             condition_onStart=True,title="!![en]Ranking",
                                             grid_showLineNumber=True)
+
 
 
     def th_top_custom(self,top):

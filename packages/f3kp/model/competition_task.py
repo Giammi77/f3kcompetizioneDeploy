@@ -26,3 +26,6 @@ class Table(object):
 
         # tbl.formulaColumn('competition_task_name',"@competition_id.name_competition || ' ' || @task_code.description",name_long='!![en]Competition task') 
         tbl.formulaColumn('competition_task_name',"_row_count",name_long='!![en]Competition task') 
+
+    def defaultValues(self):
+        return dict(state_code='A',number_groups=1) #questo dovrebbe funzionare in caso di batch?

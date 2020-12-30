@@ -10,6 +10,11 @@ class Table(object):
         tbl.column('date', dtype='D', name_long='!![en]Date')
         tbl.column('state_code', size='1', name_long='!![en]State').relation('state.code',
                                 relation_name='competition')
-
+        tbl.column('short_note',size=':255',name_long='!![en]Short Note')
+        tbl.column('competition_informations', name_long='!![en]Info', name_short='Competition informations')
+        tbl.column('preparation_time', dtype='N', name_long='!![en]Preparation time',validate_notnull=True)# lo fa' in tutte le form e view?
         tbl.formulaColumn('name_competition', "$name || ' ' || $date",name_long='!![en]Competition') 
+      
+    def defaultValues(self):
+        return dict(preparation_time=5)
 
