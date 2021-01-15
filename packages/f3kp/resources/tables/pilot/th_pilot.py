@@ -124,5 +124,4 @@ class FormPilotPage(Form):
                                         liveUpdate=True)   #usiamo il liveUpdate per aggiornare automaticamente le competizioni una volta iscritti
                                     
     def th_options(self):
-        pass
-        # return dict(showtoolbar=False,autoSave=False)
+        return dict(showtoolbar=False,autoSave=False)
