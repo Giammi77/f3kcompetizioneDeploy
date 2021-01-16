@@ -27,9 +27,9 @@ class Table(object):
         tbl.column('time_registred', dtype='B', name_long='!![en]Time registred')
         tbl.column('accept_times',dtype='B', name_long='!![en]Allow insert flight time',batch_assign=True)
 
-        tbl.aliasColumn('competition_id',"@competition_task_id.competition_id")
 
-        tbl.aliasColumn('competition_task__row_count',"@competition_task_id._row_count")
+
+        # tbl.aliasColumn('competition_task__row_count',"@competition_task_id._row_count") #forse è doppia!!
 
         tbl.aliasColumn('competition_task_state_code','@competition_task_id.state_code')
                                             
@@ -86,7 +86,7 @@ class Table(object):
                                                     where='$competition_task_id=#THIS.competition_task_id AND $task_group_code=#THIS.task_group_code'),
                                                     dtype='N', name_long='!![en]Time flew max')
 
-        tbl.formulaColumn('score',"$time_flew/$time_flew_max*1000",name_long='!![en]Score',dtype='score')
+        tbl.formulaColumn('score',"CASE WHEN $time_flew = 0 THEN  0 ELSE $time_flew/$time_flew_max*1000 END",name_long='!![en]Score',dtype='score')
 
         tbl.formulaColumn('total_score',select=dict(table='f3kp.combination',
                                                     columns='SUM($score)',
@@ -98,6 +98,10 @@ class Table(object):
         tbl.aliasColumn('task_description','@competition_task_id.@task_code.description',name_long='!![en]Task description')
         tbl.aliasColumn('task_operative_time','@competition_task_id.@task_code.operative_time',name_long='!![en]Operative Time')
     
+        tbl.aliasColumn('task_group_code_announcement','@task_group_code.announcement')
+        # tbl.aliasColumn('file_name','@competition_task_id.@task_code.file_name')
+        # tbl.aliasColumn('glider_score_string','@competition_task_id.@task_code.glider_score_string')
+        # tbl.aliasColumn('timer_code','@competition_task_id.@task_code.timer_code')
 
     def upgrade_time_registred(self,id=None,bol=None):
     #     update(record, old_record=None, pkey=None, **kwargs) method of gnr.sql.gnrsqltable.SqlTable instance
