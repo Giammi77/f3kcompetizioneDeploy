@@ -21,7 +21,7 @@ class Table(object):
     def trigger_onInserting(self, record=None):
 
         rule={'A':rules.A(),'A2':rules.A2(),'B':rules.B(),'B2':rules.B2(),
-            'C':rules.C(),'C2':rules.C2(),'D':rules.D(),'E':rules.E(),
+            'C':rules.C(),'C2':rules.C2(),'C3':rules.C3(),'D':rules.D(),'E':rules.E(),
             'E2':rules.E2(),'F':rules.F(),'G':rules.G(),'H':rules.H(),
             'I':rules.I(),'J':rules.J(),'K':rules.K(),'L':rules.L(),
             'M':rules.M()}
@@ -73,7 +73,7 @@ class Table(object):
 
     def trigger_onUpdating(self, record=None,old_record=None):
         rule={'A':rules.A(),'A2':rules.A2(),'B':rules.B(),'B2':rules.B2(),
-            'C':rules.C(),'C2':rules.C2(),'D':rules.D(),'E':rules.E(),
+            'C':rules.C(),'C2':rules.C2(),'C3':rules.C3(),'D':rules.D(),'E':rules.E(),
             'E2':rules.E2(),'F':rules.F(),'G':rules.G(),'H':rules.H(),
             'I':rules.I(),'J':rules.J(),'K':rules.K(),'L':rules.L(),
             'M':rules.M()}

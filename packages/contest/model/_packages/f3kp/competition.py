@@ -13,6 +13,5 @@ class Table(object):
     def defaultValues(self):
         default_value=self.defaultValues_()
         default_value.update(dict(contest_director_id=self.db.currentEnv.get('current_contest_director_id')))
-        
         return default_value
     

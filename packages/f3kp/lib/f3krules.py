@@ -88,9 +88,15 @@ class C2(task_base_one_validation):
 
     def __init__(self):
         super().__init__()
-        self.maximum_flights=5
+        self.maximum_flights=4
         self.maximum_flight_time=180
 
+class C3(task_base_one_validation):
+
+    def __init__(self):
+        super().__init__()
+        self.maximum_flights=5
+        self.maximum_flight_time=180
 
 class D(task_base_one_validation):
 

@@ -51,7 +51,7 @@ class View(BaseComponent):
         # f=self.db.table('f3kp.competition_task').query(where='$competition_id ILIKE :competition_id',
         #                                     competition_id='').fetch()
         # f=self.db.table('f3kp.competition_task').query('SELECT MAX($_row_count)').fetch()
-        return [dict(code='task_%(_row_count)s'%r,caption=r['_row_count'],condition='$competition_task__row_count=:rc',
+        return [dict(code='task_%(_row_count)s'%r,caption=r['_row_count'],condition='$round_number=:rc',
                 condition_rc=r['_row_count'])for r in f]
 
 

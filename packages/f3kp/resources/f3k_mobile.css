@@ -45,22 +45,40 @@
     height:30px; 
     font-size: 20px!important;
     border-radius:unset!important;
-    background:white!important;    }
+    background:white!important;    
+}
+
 span.tabLabel {
-    vertical-align: middle!important; }
+    vertical-align: middle!important; 
+}
+
 .tab_mobile .dijitTabChecked, .multibutton_selected {
     background: #1e3055!important;
-    color: white!important;   }
+    color: white!important;   
+}
 
 .slotbar_toolbar_standard {
     background: white!important;
     
-    font-size:14px; }
-    
+    font-size:14px; 
+}
+
+.slotbar_logout .slotbar_cell {
+    background: white!important;
+    font-size:18px;
+}
+.slotbar_entry .slotbar_toolbar_side_top {
+    font-weight:bold;
+    height: 15px;
+
+}
+
 .th_view_toolbar.slotbar {
-    display:None; }
+    display:None; 
+}
 
 .multibutton_container, .multibutton {
     height:auto;
     background-color:white;
-    border-radius:unset!important;    }
+    border-radius:unset!important;    
+}

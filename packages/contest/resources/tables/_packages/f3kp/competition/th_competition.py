@@ -15,6 +15,6 @@ class View(BaseComponent):
     def th_options(self):
         return dict(partitioned=True)
 
-class Form(BaseComponent):
-    def th_options(self):
-        return dict(delrow=False,addrow=False)
+# class Form(BaseComponent):
+#     def th_options(self):
+#         return dict(delrow=False,addrow=False)

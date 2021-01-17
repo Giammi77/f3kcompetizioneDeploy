@@ -36,7 +36,7 @@ class ViewFromRanking(View):
         # r.fieldcell('number_reg',edit=False)
         r.fieldcell('pilot_id',width='15em')
         r.fieldcell('total_score',dtype='score',text_align="right")
-        # r.fieldcell('competition_task__row_count')
+        # r.fieldcell('round_number')
 
     def th_order(self):
         return 'total_score:d'

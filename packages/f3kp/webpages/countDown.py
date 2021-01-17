@@ -2,66 +2,73 @@ class GnrCustomWebPage(object):
     py_requires = 'th/th:TableHandler'
 
     def main(self,root,**kwargs):
-        root.data('countDown','Count Down')
+        root.data('counter','')
+        root.data('countDown','')
+        root.data('finish','')
+        root.div ('time finish :')
+        root.div('^finish')
+        root.div('current time :')
+        root.div('^current')
+
+        root.button('Start Task', action='FIRE start;SET counting=true')
+        root.button('Start CountDown',action='SET running=true;')
+        root.div('count Down :')
         root.div('^countDown')
-        root.button('Premi',action="getCountDown(11);")
-        root.script(""" 
-                                function getCountDown(countDown) {
-                                    while (countDown>0){
-                                        genro.setData('countDown',countDown);
-                                        console.log(countDown);
-                                        now = Date.parse(new Date());
-                                        future=now+10
-                                        while(now<future){
-                                            now = Date.parse(new Date());
+        root.checkBox('^running',label='Run')
+        root.dataController("""
+                                var finish = new Date();
+                                finish.setSeconds(finish.getSeconds()+60);
+                                genro.setData('finish',finish);
+
+                                """,start='^start')
+
+        root.dataController("""if(counting){
+                                var now = new Date();
+                                genro.setData('current',now);
+                                }
+
+                                """,start='^counting',counting='^counting',_timing=1)
+
+        root.dataController("""
+                                if(running){var end_task=new Date(finish);
+                                            var now = new Date();
+                                            var countDown= parseInt((end_task-now)/1000);
+                                            if (countDown==0){
+                                                            genro.setData('running',false);
+                                                            genro.setData('countDown','00:00');}
+                                                        
+                                                        else{
+                                                            var minutes= parseInt(countDown/60);
+                                                            var seconds= countDown-(minutes*60);
+                                                            var display= minutes+':'+seconds;
+                                                            genro.setData('countDown',display);
+                                                            }
                                             }
-                                        countDown--;
+        
+                            """,_timing=1,running='^running',counter='=counter',finish='=finish')
+
+        root.script(""" 
+                      function countDown(counter) {
+                                        var finish = genro.getData('finish');
+                                        var now= new Date();
+                                        
+                                        if (now<finish){
+                                                        genro.setData('counter',counter-1);
+                                        
+                                                        var countDown=counter-1;
+                                                        
+                                                        if (countDown==0){
+                                                            genro.setData('running',false);
+                                                            genro.setData('countDown','00:00');}
+                                                        
+                                                        else{
+                                                            var minutes= parseInt(counter/60);
+                                                            var seconds= counter-(minutes*60);
+                                                            var display= minutes+':'+seconds;
+                                                            genro.setData('countDown',display);
+                                                            }
+                                                        }
+                                        else {genro.setData('running',false);}
+
                                         }
-                                    };
-                                
-                                
-
                             """)
-'''
-function getTimeRemaining(endtime) {
-  var t = Date.parse(endtime) - Date.parse(new Date());
-  var seconds = Math.floor((t / 1000) % 60);
-  var minutes = Math.floor((t / 1000 / 60) % 60);
-  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-  var days = Math.floor(t / (1000 * 60 * 60 * 24));
-  return {
-    'total': t,
-    'days': days,
-    'hours': hours,
-    'minutes': minutes,
-    'seconds': seconds
-  };
-}
-
-function initializeClock(id, endtime) {
-  var clock = document.getElementById(id);
-  var daysSpan = clock.querySelector('.days');
-  var hoursSpan = clock.querySelector('.hours');
-  var minutesSpan = clock.querySelector('.minutes');
-  var secondsSpan = clock.querySelector('.seconds');
-
-  function updateClock() {
-    var t = getTimeRemaining(endtime);
-
-    daysSpan.innerHTML = t.days;
-    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-    if (t.total <= 0) {
-      clearInterval(timeinterval);
-    }
-  }
-
-  updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
-}
-
-var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-initializeClock('clockdiv', deadline);
-'''

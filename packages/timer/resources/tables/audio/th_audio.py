@@ -4,15 +4,17 @@
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
 
-class LookupView(BaseComponent):
+class View(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('code',edit=dict(edit=True,validate_case='u'))
-        r.fieldcell('description',edit=dict(edit=True,validate_case='u'))
-        r.fieldcell('announcement',edit=True)
+        r.fieldcell('description')
+        r.fieldcell('phonetic')
+        r.fieldcell('file_name')
+        r.fieldcell('audio_type')
+
     def th_order(self):
-        return 'code'
+        return 'description'
 
     def th_query(self):
         return dict(column='description', op='contains', val='')
@@ -24,9 +26,11 @@ class Form(BaseComponent):
     def th_form(self, form):
         pane = form.record
         fb = pane.formbuilder(cols=2, border_spacing='4px')
-        fb.field('code' )
-        fb.field('description' )
+        fb.field('description')
+        fb.field('phonetic')
+        fb.field('file_name')
+        fb.field('audio_type')
 
 
     def th_options(self):
-        return dict(dialog_height='400px', dialog_width='600px' )
+        return dict(dialog_height='400px', dialog_width='600px')

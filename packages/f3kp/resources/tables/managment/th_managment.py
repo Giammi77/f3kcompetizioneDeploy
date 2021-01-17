@@ -8,12 +8,14 @@ class View(BaseComponent):
 
     def th_struct(self,struct):
         r = struct.view().rows()
-        r.fieldcell('competition_task_id')
-        r.fieldcell('state_code')
-        r.fieldcell('task_group_code')
-
+        r.fieldcell('competition_task_id',width='35em')
+        r.fieldcell('competition_task_row_count',name='!![en]Task Nr.')
+        r.fieldcell('task_group_code',width='5em')
+        r.fieldcell('time_end',width='5em')
+        r.fieldcell('state_code',width='10em')
+        r.fieldcell('activated',width='5em')
     def th_order(self):
-        return 'competition_task_id'
+        return 'competition_task_row_count,task_group_code'
 
     def th_query(self):
         return dict(column='competition_task_id', op='contains', val='')

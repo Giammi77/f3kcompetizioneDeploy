@@ -13,8 +13,6 @@ class View(BaseComponent):
         r.fieldcell('venue')
         r.fieldcell('date')
         r.fieldcell('state_code')
-        
-
 
     def th_order(self):
         return 'date'
@@ -61,12 +59,9 @@ class ViewFromPilot(View):
         #                                                                   con i dati del record
         #                   console.log(row);""",
 
-
-
     def th_view(self,view):
         view.dataRpc('dummy',self.signIn,subscribe_do_action=True,_lockScreen=dict(message='Registering pilot'))
         
-
     @public_method
     def signIn(self,competition_id=None,pilot_id=None):
         state_code=self.db.table('f3kp.competition').record(competition_id,mode='bag')
@@ -151,11 +146,12 @@ class Form(BaseComponent):
     # def th_top_custom(self,top):
     #      bar=top.bar.replaceSlots('#','save') 
     def managment(self,tc):
-        tc.contentPane(title='!![en]Managment').plainTableHandler(table='f3kp.managment',viewResource='View',
+        tc.contentPane(title='!![en]Managment').inlineTableHandler(table='f3kp.managment',viewResource='View',
                                             datapath='managment',
                                             condition='$competition_id = :competition_id',
                                             condition_competition_id='^#FORM.pkey',
-                                            condition_onStart=True,title="!![en]Managment",)
+                                            condition_onStart=True,title="!![en]Managment",
+                                            liveUpdate=True)
                                             # grid_showLineNumber=True)
 
     def competition_informations(self,tc):
@@ -198,13 +194,6 @@ class Form_from_pilot(Form):
                                             condition_competition_id='^#FORM.pkey',
                                             condition_onStart=True,title="!![en]Ranking",
                                             grid_showLineNumber=True)
-
-
-
-    def th_top_custom(self,top):
-         bar=top.bar.replaceSlots('#','') 
-
-
 
     def th_options(self):
         return dict(dialog_height='800px', dialog_width='800px')

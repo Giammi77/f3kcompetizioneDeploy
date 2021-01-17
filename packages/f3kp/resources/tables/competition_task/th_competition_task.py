@@ -29,6 +29,11 @@ class Viewcompetition_taskFromCompetition(View):
                     width='40em')
         r.fieldcell('state_code',edit=dict(edit=True,hasDownArrow=True,validate_notnull=True,default_value='A'))
         r.fieldcell('number_groups',edit=dict(edit=True,validate_notnull=True,default_value=1))
+        r.fieldcell('operative_time')
+        r.fieldcell('preparation_time')
+    
+    def th_hiddencolumns(self):
+        return "$preparation_time"
 
     def th_top_custom(self,top):
         bar=top.bar.replaceSlots('#','#,resourceActions,2') 

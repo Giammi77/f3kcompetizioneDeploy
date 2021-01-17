@@ -9,6 +9,7 @@
 		<gnrcore_email pkgcode="gnrcore:email"/>
 		<f3kp pkgcode="f3kp"/>
 		<contest pkgcode="contest"/>
+		<timer pkgcode="timer"/>
 	</packages>
 
 	<authentication pkg="gnrcore:sys">

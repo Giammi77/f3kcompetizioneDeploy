@@ -18,6 +18,9 @@ class LookupView(BaseComponent):
         r.fieldcell('code',text_align='center',edit=dict(edit=True,validate_case='u'))
         r.fieldcell('description',width='50em',edit=dict(edit=True,validate_case='u'))
         r.fieldcell('operative_time',edit=True)
+        r.fieldcell('announcement',edit=True)
+        r.fieldcell('file_name',edit=True)
+        r.fieldcell('timer_code',edit=True)
 
     def th_order(self):
         return 'code'

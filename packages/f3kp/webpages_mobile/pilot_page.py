@@ -9,20 +9,18 @@ class GnrCustomWebPage(object):
 
     def main(self,pane,**kwargs):
 
-        ################################
-        # TO DO preference for mobile
-
-        show_edit_flight_time_pane ='54%'
-        height_display_entry_time = '25%'
         tb=pane.tabContainer(tabPosition="top",selectedPage='^entry.selectedPage',_class='tab_mobile')
-
+        
         bc = tb.borderContainer(title='ENTRY FLIGHT TIMES',datapath='entry',pageName='entryFlightTimes')
         tc_pilot_views=tb.tabContainer(title='RESULTS',tabPosition ='top',selectedPage='^entry.selectedResults',pageName='results')
-        top=bc.contentPane(region='top')                                                # top bars to show data user information
-        center=bc.contentPane(region='center')                                          # grid to show flight time almost inserted
-        bottom=bc.contentPane(region='bottom', height=show_edit_flight_time_pane)       # gui for show and edit flight time
+
+        top=bc.contentPane(region='top',height='20%')                                   # top bars to show data user information
+        center=bc.contentPane(region='center')                                          # grid to show flight time already inserted
+        bottom=bc.contentPane(region='bottom', height='54%')                            # gui for show and edit flight time
         b_bc=bottom.borderContainer()                                                   # display and buttons
+
         
+
         pilot_id,full_name = self.db.table('f3kp.pilot'
                                     ).readColumns(columns='$id,$full_name',
                                                   where='$user_id=:uid',
@@ -84,7 +82,7 @@ class GnrCustomWebPage(object):
             return
 
         self.flight_time_view(center)
-        self.show_edit_time(b_bc.contentPane(region='top',width='100%',height=height_display_entry_time))
+        self.show_edit_time(b_bc.contentPane(region='top',width='100%',height='25%'))
         self.entry_time(b_bc.contentPane(region='center'))
 
         bc.dataController("""
@@ -285,18 +283,17 @@ class GnrCustomWebPage(object):
         tbl_flight_time.update_flight_time(kwargs['selected_flight_time_id'],flight_time)
 
     def logoutToolbar(self,pane):
-        font_size_top_bars= '18px'
-        bar = pane.slotToolbar('2,pageTitle,*,logoutButton,2',childname='upper',font_size=font_size_top_bars)
+        bar = pane.slotToolbar('2,pageTitle,*,logoutButton,2',childname='upper',_class='slotbar_logout')
         bar.pageTitle.div('^.current_full_name',font_weight='bold')
         bar.logoutButton.button('Logout',action='genro.logout();')
 
     def entryToolbar(self,pane):
-        font_size_top_bars2= '11px'
-        font_size_top_bars3= '11px'
-        bar2 = pane.slotToolbar('2,combination,*',childname='lower',_position='>upper')
-        bar2.combination.div('^.combination_name',font_weight='bold',font_size=font_size_top_bars2)
-        bar3 = pane.slotToolbar('*,task,*',childname='lower_lower',_position='>lower')
-        bar3.task.div('^.task_description',font_weight='bold',font_size=font_size_top_bars3)
+        # font_size_top_bars2= '11px'
+        # font_size_top_bars3= '11px'
+        bar2 = pane.slotToolbar('2,combination,*',childname='lower',_position='>upper',_class='slotbar_entry')
+        bar2.combination.div('^.combination_name',font_weight='bold')
+        bar3 = pane.slotToolbar('*,task,*',childname='lower_lower',_position='>lower',_class='slotbar_entry')
+        bar3.task.div('^.task_description',font_weight='bold')
 
     def message(self,pane,message=None):
         pane.div(message,font_size='25px',text_align='center')
