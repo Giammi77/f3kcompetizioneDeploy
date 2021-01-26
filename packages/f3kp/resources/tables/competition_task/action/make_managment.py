@@ -18,8 +18,9 @@ class Main(BaseResourceAction):
         #
         #OTTENGO LE TASK SELEZIONATE GENERARE LE MATRICI
 
-        selection=self.get_records()
-
+        selection=self.get_selection()
+    
+        
         tbl_managment=self.db.table('f3kp.managment')
 
     
@@ -28,10 +29,13 @@ class Main(BaseResourceAction):
 
             competition_id=e.get('competition_id')
             competition_task_id=e.get('id')
+            task_code=e.get('task_code')
             state_code=e.get('state_code')
             number_groups=e.get('number_groups')
-            operative_time=e.get('operative_time')
-            preparation_time=e.get('preparation_time')
+            
+            
+            tbl_task=self.db.table('f3kp.task')
+            tbl_competition=self.db.table('f3kp.competition')
             
             for g in range(number_groups):
                 #se esiste già un managment del gruppo non lo genero
@@ -44,12 +48,15 @@ class Main(BaseResourceAction):
 
                 if f:
                     continue
-            
+                operative_time=tbl_task.query(columns='$operative_time',where='$code=:task_code',task_code=task_code).fetch()[0]['operative_time']
+                preparation_time=tbl_competition.query(columns='$preparation_time',where='$id=:competition_id',competition_id=competition_id).fetch()[0]['preparation_time']
+                
                 managment=tbl_managment.newrecord(competition_task_id=competition_task_id,
                                         state_code='A',
                                         task_group_code=str(g+1),
                                         operative_time=operative_time,
                                         preparation_time=preparation_time,
+                                        
                                         )
                 
                 tbl_managment.insert(managment)

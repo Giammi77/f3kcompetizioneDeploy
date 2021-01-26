@@ -1,3 +1,5 @@
+from gnr.core.gnrdecorator import public_method
+from time import time
 class GnrCustomWebPage(object):
     py_requires = 'th/th:TableHandler'
 
@@ -9,9 +11,11 @@ class GnrCustomWebPage(object):
         root.div('^finish')
         root.div('current time :')
         root.div('^current')
-
+        root.div ('time python :')
+        root.div('^time_in_py')
         root.button('Start Task', action='FIRE start;SET counting=true')
         root.button('Start CountDown',action='SET running=true;')
+        
         root.div('count Down :')
         root.div('^countDown')
         root.checkBox('^running',label='Run')
@@ -21,13 +25,14 @@ class GnrCustomWebPage(object):
                                 genro.setData('finish',finish);
 
                                 """,start='^start')
+        root.dataRpc('time_in_python',self.time_in_python,fire='^start')
 
-        root.dataController("""if(counting){
-                                var now = new Date();
-                                genro.setData('current',now);
-                                }
+        # root.dataController("""if(counting){
+        #                         var now = new Date();
+        #                         genro.setData('current',now);
+        #                         }
 
-                                """,start='^counting',counting='^counting',_timing=1)
+        #                         """,start='^counting',counting='^counting',_timing=1)
 
         root.dataController("""
                                 if(running){var end_task=new Date(finish);
@@ -72,3 +77,12 @@ class GnrCustomWebPage(object):
 
                                         }
                             """)
+        root.dataController("""
+                                var time = new Date(start);
+                                genro.setData('time_in_py',time);
+
+                                """,start='^time_in_python',)
+    @public_method
+    def time_in_python(self,fire):
+        now=time()*1000
+        return now

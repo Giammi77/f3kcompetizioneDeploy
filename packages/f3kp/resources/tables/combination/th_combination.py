@@ -74,7 +74,7 @@ class View_from_pilot(View):
         r.fieldcell('round_number',width='4em',text_align='center')
         r.fieldcell('task_group_code',width='4em',text_align='center')
         r.fieldcell('task_description',width='15em')
-        r.fieldcell('competition_task_state_code')
+        r.fieldcell('managment_activated',width='5em')
         r.fieldcell('pilot_id',width='8em')
         r.fieldcell('flight_1',width='4em')
         r.fieldcell('flight_2',width='4em')

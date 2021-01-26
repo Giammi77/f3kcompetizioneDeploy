@@ -31,8 +31,13 @@ class Table(object):
 
         # tbl.aliasColumn('competition_task__row_count',"@competition_task_id._row_count") #forse è doppia!!
 
-        tbl.aliasColumn('competition_task_state_code','@competition_task_id.state_code')
-                                            
+        # tbl.aliasColumn('competition_task_state_code','@competition_task_id.state_code')
+        tbl.formulaColumn('managment_activated',select=dict(table='f3kp.managment',
+                                                    columns='$activated',
+                                                    where='''$task_group_code=#THIS.task_group_code 
+                                                            AND  $competition_task_id=#THIS.competition_task_id
+                                                            '''),
+                                                    dtype='B', name_long='!![en]Current Task')
         tbl.formulaColumn('combination_name','''@competition_task_id.@competition_id.name_competition || ' Round '
                              || @competition_task_id._row_count || ' Group ' || @task_group_code.description ''',name_long='!![en]Combination') 
  

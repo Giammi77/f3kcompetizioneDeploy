@@ -134,7 +134,8 @@ class Form(BaseComponent):
                                             datapath='combination',
                                             condition='$competition_id = :competition_id',
                                             condition_competition_id='^#FORM.pkey',
-                                            condition_onStart=True,title="!![en]combination")
+                                            condition_onStart=True,title="!![en]combination",
+                                            liveUpdate=True)
         
     def ranking(self,tc):
         tc.contentPane(title='!![en]Ranking').plainTableHandler(table='f3kp.registration',viewResource='ViewFromRanking',

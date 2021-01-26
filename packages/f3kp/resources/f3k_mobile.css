@@ -60,7 +60,7 @@ span.tabLabel {
 .slotbar_toolbar_standard {
     background: white!important;
     
-    font-size:14px; 
+    
 }
 
 .slotbar_logout .slotbar_cell {
@@ -69,7 +69,7 @@ span.tabLabel {
 }
 .slotbar_entry .slotbar_toolbar_side_top {
     font-weight:bold;
-    height: 15px;
+    height: 14px;
 
 }
 
@@ -81,4 +81,12 @@ span.tabLabel {
     height:auto;
     background-color:white;
     border-radius:unset!important;    
+}
+.time_remaing{
+    text-align: center;
+    font-size: 22px;
+    font-weight:bold;
+    display: inline;
+    color:mediumblue;
+    
 }

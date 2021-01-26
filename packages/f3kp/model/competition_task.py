@@ -18,10 +18,10 @@ class Table(object):
                                 mode='foreingkey',
                                 onDelete='cascade')
         
-        tbl.column('state_code', size='1', name_long='!![en]State').relation('state.code',
-                                relation_name='competition_task', 
-                                mode='foreingkey',
-                                onDelete='cascade')
+        # tbl.column('state_code', size='1', name_long='!![en]State').relation('state.code',
+        #                         relation_name='competition_task', 
+        #                         mode='foreingkey',
+        #                         onDelete='cascade')
 
         tbl.column('number_groups', dtype='L', name_long='Number Groups', name_short='Nr.Groups')
 

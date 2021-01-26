@@ -11,7 +11,7 @@ class View(BaseComponent):
         r.fieldcell('_row_count',name='Nr.Task')
         r.fieldcell('competition_id')
         r.fieldcell('task_code',edit=dict(edit=True,validate_notnull=True,hasDownArrow=True))
-        r.fieldcell('state_code')
+        # r.fieldcell('state_code')
         r.fieldcell('number_groups',edit=dict(edit=True,validate_notnull=True))
 
     def th_order(self):
@@ -27,7 +27,7 @@ class Viewcompetition_taskFromCompetition(View):
         r.fieldcell('competition_id')
         r.fieldcell('task_code',edit=dict(edit=True,validate_notnull=True,hasDownArrow=True),
                     width='40em')
-        r.fieldcell('state_code',edit=dict(edit=True,hasDownArrow=True,validate_notnull=True,default_value='A'))
+        # r.fieldcell('state_code',edit=dict(edit=True,hasDownArrow=True,validate_notnull=True,default_value='A'))
         r.fieldcell('number_groups',edit=dict(edit=True,validate_notnull=True,default_value=1))
         r.fieldcell('operative_time')
         r.fieldcell('preparation_time')

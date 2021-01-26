@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from gnr.core.gnrdecorator import public_method
-
+import time
 
 
 class GnrCustomWebPage(object):
@@ -8,17 +8,19 @@ class GnrCustomWebPage(object):
     css_requires='f3k_mobile'
 
     def main(self,pane,**kwargs):
-
-        tb=pane.tabContainer(tabPosition="top",selectedPage='^entry.selectedPage',_class='tab_mobile')
+        main_bc=pane.borderContainer()
+        main_bottom=main_bc.contentPane(region='top', height='5%')
+     
+        tb=main_bc.tabContainer(region='center',tabPosition="top",selectedPage='^entry.selectedPage',_class='tab_mobile')
         
         bc = tb.borderContainer(title='ENTRY FLIGHT TIMES',datapath='entry',pageName='entryFlightTimes')
         tc_pilot_views=tb.tabContainer(title='RESULTS',tabPosition ='top',selectedPage='^entry.selectedResults',pageName='results')
 
-        top=bc.contentPane(region='top',height='20%')                                   # top bars to show data user information
-        center=bc.contentPane(region='center')                                          # grid to show flight time already inserted
+        top=bc.contentPane(region='top',height='15%')                                   # top bars to show data user information
+        center=bc.contentPane(region='center',font_size='15px',text_align='center')                                          # grid to show flight time already inserted
         bottom=bc.contentPane(region='bottom', height='54%')                            # gui for show and edit flight time
         b_bc=bottom.borderContainer()                                                   # display and buttons
-
+        
         
 
         pilot_id,full_name = self.db.table('f3kp.pilot'
@@ -37,23 +39,39 @@ class GnrCustomWebPage(object):
         try:
             combination_id_for_entry_time= self.db.table('f3kp.combination'
                                         ).readColumns(columns='$id',
-                                                    where='$pilot_id=:pid AND $competition_task_state_code=:state',
+                                                    where='$pilot_id=:pid AND $managment_activated=:managment_activated',
                                                     pid=pilot_id,
-                                                    state='S'
+                                                    managment_activated=True
                                                     )
+
         except:
             combination_id_for_entry_time=None
 
         try:
             current_combination_id,combination_name,task_description=self.db.table('f3kp.combination'
                                         ).readColumns(columns='$id,$combination_name,$task_description,',
-                                                    where='$competition_id=:competition_id AND $competition_task_state_code=:state',
+                                                    where='$competition_id=:competition_id AND $managment_activated=:managment_activated',
                                                     competition_id=competition_id,
-                                                    state='S'
+                                                    managment_activated=True
                                                     )
         except:
              current_combination_id,combination_name,task_description=None,None,None
 
+        try:
+            time_end=self.db.table('f3kp.managment'
+                                        ).readColumns(columns='$time_end',
+                                                    where='$competition_id=:competition_id AND $activated=:activated',
+                                                    competition_id=competition_id,
+                                                    activated=True
+                                                    )
+        except:
+            time_end= None
+
+        bc.data('.count_down','')
+        bc.data('.running',True)
+        bc.data('.current_time',True)
+        bc.data('.time_end',time_end)
+        bc.data('.finish','')
         bc.data('.current_pilot_id', pilot_id)
         bc.data('.current_full_name', full_name)
         bc.data('.current_competition_id', competition_id)  
@@ -61,6 +79,44 @@ class GnrCustomWebPage(object):
         bc.data('.combination_id_for_entry',combination_id_for_entry_time)
         bc.data('.combination_name', combination_name)
         bc.data('.task_description',task_description)
+
+        # THIS DATACONTROLLER USED TO FORMAT END TIME OF THE CURRENT TASK
+
+        bc.dataController("""
+                                var finish = new Date(time_end);
+                                genro.setData('entry.finish',finish);
+                                
+                                """,_onStart=True,time_end='^.time_end')
+
+        bc.dataController("""
+                                var current_time = new Date();
+                                genro.setData('entry.current_time',current_time);
+
+                                """,_timing=1,_onStart=True)
+        
+        bc.dataController("""   
+                                if(running){var end_task=new Date(finish);
+                                            
+                                            var now = new Date();
+                                            var countDown= parseInt((end_task-now)/1000);
+                                            console.log(isNaN(countDown));
+                                            if (isNaN(countDown)||countDown<0){genro.setData('entry.running',false);
+                                                            genro.setData('entry.count_down','00:00');
+                                                            return;};
+                                            if (countDown==0){
+                                                            genro.setData('entry.running',false);
+                                                            genro.setData('entry.count_down','00:00');}
+                                                        
+                                                        else{
+                                                            var minutes= parseInt(countDown/60);
+                                                            var seconds= countDown-(minutes*60);
+                                                            var display= minutes+':'+seconds;
+                                                            genro.setData('entry.count_down',display);
+                                                            }
+                                            }
+        
+                            """,_timing=1,running='^.running',finish='=.finish',_onStart=True)
+
 
         # THIS DATACONTROLLER USED FOR KEEP UPDATE THE DATA BETWEEN TABS
         bc.dataController("""var competition_id= genro.getData('entry.current_competition_id');
@@ -72,15 +128,16 @@ class GnrCustomWebPage(object):
         self.logoutToolbar(top)
         self.entryToolbar(top)
         self.pilot_views(tc_pilot_views)
-
+        self.time_remaining(main_bottom,'^entry.count_down')
         if not competition_id:
             self.message(center,'THERE IS NO COMPETITION AVAILABLE')
             return
 
         if not combination_id_for_entry_time :
+            
             self.message(center,'ENTRY TIME NOT AVAILABLE, YOU ARE NOT IN THIS TASK')
             return
-
+        
         self.flight_time_view(center)
         self.show_edit_time(b_bc.contentPane(region='top',width='100%',height='25%'))
         self.entry_time(b_bc.contentPane(region='center'))
@@ -109,15 +166,18 @@ class GnrCustomWebPage(object):
                             minutes='^.selected_minutes', seconds='^.selected_seconds',tenths='^.selected_tenths',
                             time='^.selected_flight_time')
 
+    def time_remaining(self,cp,time):
+        cp.div("TIME REMAINING:",_class='time_remaing')
+        cp.div(time,_class='time_remaing')
 
     def flight_time_view(self,center):
         center.inlineTableHandler(table='f3kp.flight_time',
                         viewResource='ViewFromPilotMobile',
                         datapath='flight_time', 
                         nodeId='flight_time', 
-                        condition='@combination_id.pilot_id=:pid AND @combination_id.@competition_task_id.state_code=:state',
+                        condition='@combination_id.pilot_id=:pid AND @combination_id.@competition_task_id.@managment.activated=:activated',
                         condition_pid='^entry.current_pilot_id',
-                        condition_state='S',
+                        condition_activated=True,
                         pbl_classes=False,condition_onStart=True,
                         font_size = '25px',
                         searchOn=False,
@@ -296,7 +356,9 @@ class GnrCustomWebPage(object):
         bar3.task.div('^.task_description',font_weight='bold')
 
     def message(self,pane,message=None):
-        pane.div(message,font_size='25px',text_align='center')
+        pane.div(message,font_size='15px',text_align='center')
+
+    
 
     def pilot_views(self,tc):
 
