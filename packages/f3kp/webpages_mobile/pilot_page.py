@@ -100,6 +100,7 @@ class GnrCustomWebPage(object):
                                             var countDown= parseInt((end_task-now)/1000);
                                             if (countDown<0){
                                                             genro.setData('entry.count_down','00:00')};
+                                                            
                                             if (countDown==0){
                                                             genro.setData('entry.running',false);
                                                             genro.setData('entry.count_down','00:00');}
