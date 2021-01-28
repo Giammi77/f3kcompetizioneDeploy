@@ -99,7 +99,6 @@ class GnrCustomWebPage(object):
                                             
                                             var now = new Date();
                                             var countDown= parseInt((end_task-now)/1000);
-                                            console.log(isNaN(countDown));
                                             if (isNaN(countDown)||countDown<0){genro.setData('entry.running',false);
                                                             genro.setData('entry.count_down','00:00');
                                                             return;};
