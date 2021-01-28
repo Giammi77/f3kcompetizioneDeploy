@@ -98,9 +98,8 @@ class GnrCustomWebPage(object):
                                 if(running){var end_task=new Date(finish);
                                             var now = new Date();
                                             var countDown= parseInt((end_task-now)/1000);
-                                            if (isNaN(countDown)||countDown<0){
-                                                            genro.setData('entry.count_down','00:00');
-                                                            return;};
+                                            if (countDown<0){
+                                                            genro.setData('entry.count_down','00:00')};
                                             if (countDown==0){
                                                             genro.setData('entry.running',false);
                                                             genro.setData('entry.count_down','00:00');}
