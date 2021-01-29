@@ -67,6 +67,12 @@ span.tabLabel {
     background: white!important;
     font-size:18px;
 }
+.slotbar_cell {
+    background: white!important;
+    text-align: center;
+    font-size:13px;
+}
+
 .slotbar_entry .slotbar_toolbar_side_top {
     font-weight:bold;
     height: 14px;
@@ -86,7 +92,9 @@ span.tabLabel {
     text-align: center;
     font-size: 22px;
     font-weight:bold;
-    display: inline;
     color:mediumblue;
-    
 }
+.tundra .dijitButtonNode{
+    padding:2px;
+    font-family: monospace;
+} 

@@ -16,7 +16,7 @@ class GnrCustomWebPage(object):
         bc = tb.borderContainer(title='ENTRY FLIGHT TIMES',datapath='entry',pageName='entryFlightTimes')
         tc_pilot_views=tb.tabContainer(title='RESULTS',tabPosition ='top',selectedPage='^entry.selectedResults',pageName='results')
 
-        top=bc.contentPane(region='top',height='15%')                                   # top bars to show data user information
+        top=bc.contentPane(region='top',height='12%')                                   # top bars to show data user information
         center=bc.contentPane(region='center',font_size='15px',text_align='center')                                          # grid to show flight time already inserted
         bottom=bc.contentPane(region='bottom', height='54%')                            # gui for show and edit flight time
         b_bc=bottom.borderContainer()                                                   # display and buttons
@@ -98,9 +98,8 @@ class GnrCustomWebPage(object):
                                 if(running){var end_task=new Date(finish);
                                             var now = new Date();
                                             var countDown= parseInt((end_task-now)/1000);
-                                            if (countDown<0){
-                                                            genro.setData('entry.count_down','00:00')};
-                                                            
+                                            if (countDown<0 || isNaN(countDown)){
+                                                            genro.setData('entry.count_down','00:00');return};
                                             if (countDown==0){
                                                             genro.setData('entry.running',false);
                                                             genro.setData('entry.count_down','00:00');}
@@ -114,6 +113,9 @@ class GnrCustomWebPage(object):
                                             }
         
                             """,_timing=1,running='^.running',finish='=.finish',_onStart=True)
+        
+
+
 
 
         # THIS DATACONTROLLER USED FOR KEEP UPDATE THE DATA BETWEEN TABS
@@ -165,8 +167,13 @@ class GnrCustomWebPage(object):
                             time='^.selected_flight_time')
 
     def time_remaining(self,cp,time):
-        cp.div("TIME REMAINING:",_class='time_remaing')
-        cp.div(time,_class='time_remaing')
+        table=cp.table(margin='auto')
+        tbody=table.tbody()
+        row=tbody.tr(_class='time_remaing')
+        cel=row.td()
+        cel.div("TIME REMAINING:")
+        cel=row.td()
+        cel.div(time,text_align='right',width='3em')
 
     def flight_time_view(self,center):
         center.inlineTableHandler(table='f3kp.flight_time',
@@ -234,37 +241,38 @@ class GnrCustomWebPage(object):
        
         row=tbody.tr()
         cel=row.td()
-        cel.button('6',action="genro.publish('insertDigit',{digit:6,selected_:'.selected_'})")
-        cel=row.td()
         cel.button('7',action="genro.publish('insertDigit',{digit:7,selected_:'.selected_'})")
         cel=row.td()
         cel.button('8',action="genro.publish('insertDigit',{digit:8,selected_:'.selected_'})")
         cel=row.td()
         cel.button('9',action="genro.publish('insertDigit',{digit:9,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('-',action="genro.publish('removeDigit',{selected_:'.selected_'})")
+
 
         row=tbody.tr()
-
-        cel=row.td()
-        cel.button('2',action="genro.publish('insertDigit',{digit:2,selected_:'.selected_'})")
-        cel=row.td()
-        cel.button('3',action="genro.publish('insertDigit',{digit:3,selected_:'.selected_'})")
         cel=row.td()
         cel.button('4',action="genro.publish('insertDigit',{digit:4,selected_:'.selected_'})")
         cel=row.td()
         cel.button('5',action="genro.publish('insertDigit',{digit:5,selected_:'.selected_'})")
         cel=row.td()
+        cel.button('6',action="genro.publish('insertDigit',{digit:6,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('+',action="""genro.publish('saveTime',{minutes:'^.minutes',seconds:'^.seconds',tenths:'^.tenths',
+                                selected_flight_time_id:'^.selected_flight_time_id'})""")
 
 
         row=tbody.tr()
         cel=row.td()
         cel.button('1',action="genro.publish('insertDigit',{digit:1,selected_:'.selected_'})")
         cel=row.td()
+        cel.button('2',action="genro.publish('insertDigit',{digit:2,selected_:'.selected_'})")
+        cel=row.td()
+        cel.button('3',action="genro.publish('insertDigit',{digit:3,selected_:'.selected_'})")
+        cel=row.td()
         cel.button('0',action="genro.publish('insertDigit',{digit:0,selected_:'.selected_'})")
-        cel=row.td()
-        cel.button('-',action="genro.publish('removeDigit',{selected_:'.selected_'})")
-        cel=row.td()
-        cel.button('+',action="""genro.publish('saveTime',{minutes:'^.minutes',seconds:'^.seconds',tenths:'^.tenths',
-                                selected_flight_time_id:'^.selected_flight_time_id'})""")
+        
+
 
         cp.dataController("""this.setRelativeData('.minutes','-');
                             this.setRelativeData('.seconds','-');
@@ -348,7 +356,7 @@ class GnrCustomWebPage(object):
     def entryToolbar(self,pane):
         # font_size_top_bars2= '11px'
         # font_size_top_bars3= '11px'
-        bar2 = pane.slotToolbar('2,combination,*',childname='lower',_position='>upper',_class='slotbar_entry')
+        bar2 = pane.slotToolbar('*,combination,*',childname='lower',_position='>upper',_class='slotbar_entry')
         bar2.combination.div('^.combination_name',font_weight='bold')
         bar3 = pane.slotToolbar('*,task,*',childname='lower_lower',_position='>lower',_class='slotbar_entry')
         bar3.task.div('^.task_description',font_weight='bold')
