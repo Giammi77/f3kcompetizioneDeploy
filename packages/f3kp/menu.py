@@ -2,7 +2,7 @@
 # encoding: utf-8
 def config(root,application=None):
     f3k = root.branch(u"F3k")
-    f3k.thpage(u"!![en]Competition", table="f3kp.competition")
+    f3k.thpage(u"!![en]Competition", table="f3kp.competition",formResource='Form',viewResource='View')
     f3k.thpage(u"!![en]Pilot", table="f3kp.pilot")
     f3k.thpage(u"!![en]Registration", table='f3kp.registration')
     f3k.thpage(u"!![en]Competition Task", table='f3kp.competition_task')
