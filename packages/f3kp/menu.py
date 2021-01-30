@@ -9,6 +9,7 @@ def config(root,application=None):
     f3k.thpage(u"!![en]Combination",table='f3kp.combination',formResource='FormCombination',viewResource='View_from_pilot')
     f3k.thpage(u"!![en]Flight Time",table='f3kp.flight_time')
     f3k.webpage(u"!![en]Register my Flight Time",filepath="/f3kp/prova_tempi" )
+    f3k.webpage(u"!![en]Managment Mobile",filepath="/f3kp/contest_page")
     f3k.lookups(u"!![en] Auxiliar Table", lookup_manager="f3kp")
     # contest_director = root.branch(u"!![en]Contest Director", pkg='contest')
 

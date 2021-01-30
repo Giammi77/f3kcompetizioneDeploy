@@ -5,6 +5,6 @@ class GnrCustomWebPage(object):
     py_requires = 'mobileindex'
     index_url = 'html_pages/splashscreen.html'
 
-    def main(self,root,**kwargs):
-        py_requires = 'mobileindex'
-        index_url = 'html_pages/splashscreen.html'
+    # def main(self,root,**kwargs):
+    #     py_requires = 'mobileindex'
+    #     index_url = 'html_pages/splashscreen.html'
