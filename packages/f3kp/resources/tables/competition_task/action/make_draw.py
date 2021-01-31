@@ -4,7 +4,7 @@ from gnr.web.batch.btcaction import BaseResourceAction
 import random as rnd 
 
 caption='Make Draw' #nome del menu del batch
-tags='admin' #autorizzazione al batch
+tags='CDI,admin'
 description='Make draw for the task' #nome più completo
 
 class Main(BaseResourceAction):

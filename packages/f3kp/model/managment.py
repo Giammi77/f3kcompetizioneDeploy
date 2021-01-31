@@ -31,4 +31,4 @@ class Table(object):
         tbl.aliasColumn('competition_task_row_count','@competition_task_id._row_count')
         tbl.formulaColumn('managment_description','''@competition_task_id.@competition_id.name_competition || ' Round '
                                 || @competition_task_id._row_count || ' Group ' || @task_group_code.description ''',name_long='!![en]Combination') 
-
+        

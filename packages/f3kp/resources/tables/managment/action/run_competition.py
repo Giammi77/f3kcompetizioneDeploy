@@ -5,7 +5,7 @@ import random as rnd
 from time import time,sleep
 
 caption='Run Competition' #nome del menu del batch
-tags='CDI,admin' #autorizzazione al batch
+tags='contest_director,CDI,admin' #autorizzazione al batch
 description='Run Competition' #nome più completo
 
 class Main(BaseResourceAction):

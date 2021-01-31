@@ -13,15 +13,13 @@ class GnrCustomWebPage(object):
      
         tb=main_bc.tabContainer(region='center',tabPosition="top",selectedPage='^entry.selectedPage',_class='tab_mobile')
         
-        bc = tb.borderContainer(title='ENTRY FLIGHT TIMES',datapath='entry',pageName='entryFlightTimes')
+        bc = tb.borderContainer(title='ENTRY',datapath='entry',pageName='entryFlightTimes')
         tc_pilot_views=tb.tabContainer(title='RESULTS',tabPosition ='top',selectedPage='^entry.selectedResults',pageName='results')
-
+        
         top=bc.contentPane(region='top',height='12%')                                   # top bars to show data user information
         center=bc.contentPane(region='center',font_size='15px',text_align='center')                                          # grid to show flight time already inserted
         bottom=bc.contentPane(region='bottom', height='54%')                            # gui for show and edit flight time
         b_bc=bottom.borderContainer()                                                   # display and buttons
-        
-        
 
         pilot_id,full_name = self.db.table('f3kp.pilot'
                                     ).readColumns(columns='$id,$full_name',
@@ -132,6 +130,14 @@ class GnrCustomWebPage(object):
         if not competition_id:
             self.message(center,'THERE IS NO COMPETITION AVAILABLE')
             return
+
+        tb.contentPane(title='TASKS').plainTableHandler(table='f3kp.managment', 
+                                datapath='managment',
+                                viewResource='ViewFromPilotPageMobile',
+                                condition='$competition_id=:competition_id',
+                                condition_competition_id=competition_id,
+                                condition_onStart=True,
+                                liveUpdate=True,autoSave=True)
 
         if not combination_id_for_entry_time :
             

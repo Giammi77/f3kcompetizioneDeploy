@@ -4,7 +4,7 @@ from gnr.web.batch.btcaction import BaseResourceAction
 import random as rnd 
 
 caption='Make Managment' #nome del menu del batch
-tags='CDI,admin' #autorizzazione al batch
+tags='CDI,admin'
 description='Make list of contest managment' #nome più completo
 
 class Main(BaseResourceAction):
