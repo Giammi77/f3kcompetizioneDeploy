@@ -93,7 +93,10 @@ class View_from_pilot(View):
         return 'round_number,task_group_code,score:d'
 
 class View_from_contest_director(View_from_pilot):
-    pass
+    def th_struct(self,struct):
+        r = struct.view().rows()
+        # r.fieldcell('competition_task_id')
+        r.fieldcell('round_number',width='4em',text_align='center')
 
 class View_from_pilot_mobile(View_from_pilot):
     def th_struct(self,struct):
