@@ -45,9 +45,9 @@ class GnrCustomWebPage(object):
         except:
             combination_id_for_entry_time=None
 
-        try:
+        try: 
             current_combination_id,combination_name,task_description=self.db.table('f3kp.combination'
-                                        ).readColumns(columns='$id,$combination_name,$task_description,',
+                                        ).readColumns(columns='$id,$combination_name,$task_description',
                                                     where='$competition_id=:competition_id AND $managment_activated=:managment_activated',
                                                     competition_id=competition_id,
                                                     managment_activated=True
@@ -65,18 +65,27 @@ class GnrCustomWebPage(object):
         except:
             time_end= None
 
+        bc.data('.current_pilot_id', pilot_id)
+        bc.data('.current_full_name', full_name)
+
+        bc.data('.current_competition_id', competition_id)  
+
+        bc.data('.combination_id_for_entry',combination_id_for_entry_time)
+
+        bc.data('.current_combination', current_combination_id)
+        bc.data('.combination_name', combination_name)
+        bc.data('.task_description',task_description)
+
+        bc.data('.time_end',time_end)
+        
         bc.data('.count_down','')
         bc.data('.running',True)
         bc.data('.current_time',True)
-        bc.data('.time_end',time_end)
         bc.data('.finish','')
-        bc.data('.current_pilot_id', pilot_id)
-        bc.data('.current_full_name', full_name)
-        bc.data('.current_competition_id', competition_id)  
-        bc.data('.current_combination', current_combination_id)
-        bc.data('.combination_id_for_entry',combination_id_for_entry_time)
-        bc.data('.combination_name', combination_name)
-        bc.data('.task_description',task_description)
+
+
+
+
 
         # THIS DATACONTROLLER USED TO FORMAT END TIME OF THE CURRENT TASK
 

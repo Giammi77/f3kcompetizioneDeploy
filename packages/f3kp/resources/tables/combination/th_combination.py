@@ -52,12 +52,13 @@ class View(BaseComponent):
         #                                     competition_id='').fetch()
         # f=self.db.table('f3kp.competition_task').query('SELECT MAX($_row_count)').fetch()
 
+        # [[_row_count=1], [_row_count=2]]
         return [dict(code='task_%(_row_count)s'%r,caption=r['_row_count'],condition='$round_number=:rc',
                 condition_rc=r['_row_count'])for r in f]
 
 
     def th_top_toolbar(self,top):
-        round=top.slotToolbar('1,lbl,2,sections@round,*,allow_time',childname='round',_position='>bar')
+        round=top.slotToolbar('1,lbl,2,sections@round,*',childname='round',_position='>bar')
         round.lbl.div('ROUND')
 
         group=top.slotToolbar('1,lbl,2,sections@task_group_code,*',childname='group',_position='>round')
@@ -93,10 +94,7 @@ class View_from_pilot(View):
         return 'round_number,task_group_code,score:d'
 
 class View_from_contest_director(View_from_pilot):
-    def th_struct(self,struct):
-        r = struct.view().rows()
-        # r.fieldcell('competition_task_id')
-        r.fieldcell('round_number',width='4em',text_align='center')
+    pass
 
 class View_from_pilot_mobile(View_from_pilot):
     def th_struct(self,struct):
