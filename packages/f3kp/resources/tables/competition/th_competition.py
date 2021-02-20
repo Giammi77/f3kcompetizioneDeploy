@@ -15,13 +15,17 @@ class View(BaseComponent):
         r.fieldcell('state_code')
 
     def th_order(self):
-        return 'date'
+        return 'date:d'
 
     def th_query(self):
         return dict(column='name', op='contains', val='')
 
     def th_options(self):
         return dict(virtualStore=True)
+
+    def th_top_toolbar(self,top):
+        state=top.slotToolbar('1,lbl,2,sections@state_code,*',childname='state')
+        state.lbl.div('STATE')
 
 
 
