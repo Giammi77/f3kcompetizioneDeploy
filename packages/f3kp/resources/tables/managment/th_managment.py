@@ -129,7 +129,7 @@ class ViewFromContestPageMobile(View):
         r.cell('time2_end',calculated=True,
           _customGetter="function(row){if (row.time_end ==0){return '';} else {return new Date(row.time_end).toLocaleString();}}",
           name='!![en]Time end',text_align='left')
-        r.checkboxcolumn('activated',width='5em')
+        r.checkboxcolumn('activated',width='5em',edit=dict(edit=False))
 
 
     def th_top_custom(self,top):
@@ -143,7 +143,7 @@ class ViewFromPilotPageMobile(View):
         r.fieldcell('competition_task_id',width='15em')
         r.fieldcell('competition_task_row_count',name='!![en]Task Nr.',width='3em')
         r.fieldcell('task_group_code',width='3em')
-        r.checkboxcolumn('activated',width='5em',name='!![en]Current Task')
+        r.checkboxcolumn('activated',width='5em',name='!![en]Current Task',edit=dict(edit=False))
 
 
 class Form(BaseComponent):
