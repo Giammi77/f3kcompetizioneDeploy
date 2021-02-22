@@ -424,7 +424,7 @@ class GnrCustomWebPage(object):
     def myCompetition(self,cp):
         cp.dialogTableHandler(table='f3kp.competition',
                                 viewResource='ViewFromPilotMobile',
-                                formResource='Form_from_pilot',
+                                formResource='Form_from_pilot_mobile',
                                 condition='@registration.pilot_id=:pr_pilot_id',
                                 condition_pr_pilot_id='^current_pilot_id',
                                 condition_onStart=True,

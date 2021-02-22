@@ -226,3 +226,21 @@ class Form_from_pilot(Form):
 
     def th_options(self):
         return dict(dialog_height='800px', dialog_width='800px')
+
+class Form_from_pilot_mobile(Form_from_pilot):
+    def th_form(self, form):
+        bc=form.center.borderContainer()
+        top=bc.contentPane(region='top',height='20%',datapath='.record')
+        center_tb=bc.tabContainer(region='center')
+        fb = top.formbuilder(margin_left='0px',margin_right='10px'
+                            ,cols=2,cols_width='auto',fld_width='100%')
+        fb.field('date',readOnly=True)
+        fb.field('state_code',colspan=2,readOnly=True)
+
+        fb.field('name',readOnly=True,width='5em')
+        fb.field('venue',readOnly=True)
+        
+        fb.field('short_note',colspan=2,readOnly=True)
+
+    def th_top_custom(self,top):
+        bar=top.bar.replaceSlots('#','') 
