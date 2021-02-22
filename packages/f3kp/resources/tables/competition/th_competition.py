@@ -24,9 +24,7 @@ class View(BaseComponent):
         return dict(virtualStore=True)
 
     def th_top_toolbar(self,top):
-        state=top.slotToolbar('1,lbl,2,sections@state_code,*',childname='state')
-        state.lbl.div('STATE')
-
+        state=top.slotToolbar('1,sections@state_code,*',childname='state')
 
 
 class ViewFromPilot(View):
@@ -99,6 +97,32 @@ class ViewMyCompetition(View):
         r.fieldcell('date',edit=False)
         r.fieldcell('state_code',edit=False)
     
+
+class ViewFromPilotMobile(View):
+    def th_struct(self,struct):
+        r = struct.view().rows()
+        r.fieldcell('name',width='10em')
+        r.fieldcell('venue',width='10em')
+        r.fieldcell('date',width='5em')
+        r.fieldcell('state_code',width='5em')
+    def th_top_toolbar(self,top):
+        state=top.slotToolbar('sections@state_code,*',childname='state')
+
+class ViewFromRegisteringMobile(ViewFromPilot):
+    def th_struct(self,struct):
+        r = struct.view().rows()
+        # r.fieldcell('name_competition')
+        r.fieldcell('name',width='10em')
+        r.fieldcell('venue',width='10em')
+        r.fieldcell('date',width='5em')
+        r.fieldcell('state_code',width='5em')
+        r.cell('!![en]Action',calculated=True,format_buttonclass='gear iconbox',
+                    format_isbutton=True,
+                    format_onclick="""var row = this.widget.rowByIndex($1.rowIndex);
+                                    var pilot_id = this.getRelativeData('main.current_pilot_id');
+                                      PUBLISH do_action = {competition_id:row._pkey,pilot_id:pilot_id};""",
+                    width='5em')
+
 class Form(BaseComponent):
     #FORM FROM CONTEST DIRECTOR
     def th_form(self, form):

@@ -143,7 +143,7 @@ class ViewFromPilotPageMobile(View):
         r.fieldcell('competition_task_id',width='15em')
         r.fieldcell('competition_task_row_count',name='!![en]Task Nr.',width='3em')
         r.fieldcell('task_group_code',width='3em')
-        r.checkboxcolumn('activated',width='5em',name='!![en]Current Task',edit=dict(edit=False))
+        r.fieldcell('activated',width='5em',name='!![en]Current Task',edit=False)
 
 
 class Form(BaseComponent):

@@ -8,6 +8,25 @@ class GnrCustomWebPage(object):
     css_requires='f3k_mobile'
 
     def main(self,pane,**kwargs):
+
+        pilot_id,full_name = self.db.table('f3kp.pilot'
+                            ).readColumns(columns='$id,$full_name',
+                                            where='$user_id=:uid',
+                                            uid=self.rootenv['user_id'])
+        try:
+            competition_id = self.db.table('f3kp.registration'
+                                        ).readColumns(columns='$competition_id',
+                                                    where='$pilot_id=:pilot_id AND $competition_state_code=:code',
+                                                    pilot_id=pilot_id,
+                                                    code='S')
+        except:
+            competition_id=None
+        pane.data('current_pilot_id', pilot_id)
+        pane.data('current_full_name', full_name)
+        if not competition_id:
+            self.registering_page(pane)
+            return
+        
         main_bc=pane.borderContainer()
         main_bottom=main_bc.contentPane(region='top', height='5%')
      
@@ -21,19 +40,6 @@ class GnrCustomWebPage(object):
         bottom=bc.contentPane(region='bottom', height='54%')                            # gui for show and edit flight time
         b_bc=bottom.borderContainer()                                                   # display and buttons
 
-        pilot_id,full_name = self.db.table('f3kp.pilot'
-                                    ).readColumns(columns='$id,$full_name',
-                                                  where='$user_id=:uid',
-                                                  uid=self.rootenv['user_id'])
-        try:
-            competition_id = self.db.table('f3kp.registration'
-                                        ).readColumns(columns='$competition_id',
-                                                    where='$pilot_id=:pilot_id AND $competition_state_code=:code',
-                                                    pilot_id=pilot_id,
-                                                    code='S')
-        except:
-            competition_id=None
-        
         try:
             combination_id_for_entry_time= self.db.table('f3kp.combination'
                                         ).readColumns(columns='$id',
@@ -65,8 +71,8 @@ class GnrCustomWebPage(object):
         except:
             time_end= None
 
-        bc.data('.current_pilot_id', pilot_id)
-        bc.data('.current_full_name', full_name)
+        # bc.data('.current_pilot_id', pilot_id)
+        # bc.data('.current_full_name', full_name)
 
         bc.data('.current_competition_id', competition_id)  
 
@@ -82,9 +88,6 @@ class GnrCustomWebPage(object):
         bc.data('.running',True)
         bc.data('.current_time',True)
         bc.data('.finish','')
-
-
-
 
 
         # THIS DATACONTROLLER USED TO FORMAT END TIME OF THE CURRENT TASK
@@ -136,9 +139,9 @@ class GnrCustomWebPage(object):
         self.entryToolbar(top)
         self.pilot_views(tc_pilot_views)
         self.time_remaining(main_bottom,'^entry.count_down')
-        if not competition_id:
-            self.message(center,'THERE IS NO COMPETITION AVAILABLE')
-            return
+        # if not competition_id:
+        #     self.message(center,'THERE IS NO COMPETITION AVAILABLE')
+        #     return
 
         tb.contentPane(title='TASKS').plainTableHandler(table='f3kp.managment', 
                                 datapath='managment',
@@ -196,7 +199,7 @@ class GnrCustomWebPage(object):
                         datapath='flight_time', 
                         nodeId='flight_time', 
                         condition='@combination_id.pilot_id=:pid AND @combination_id.@competition_task_id.@managment.activated=:activated',
-                        condition_pid='^entry.current_pilot_id',
+                        condition_pid='^current_pilot_id',
                         condition_activated=True,
                         pbl_classes=False,condition_onStart=True,
                         font_size = '25px',
@@ -293,9 +296,10 @@ class GnrCustomWebPage(object):
                             this.setRelativeData('.seconds','-');
                             this.setRelativeData('.tenths','-');
                             this.setRelativeData('.selected_','selected_');
+                            
                          """,fire='^.clear_display')
 
-        cp.dataRpc('.clear_display',self.addTime,combination_id='=.combination_id_for_entry',subscribe_saveTime=True)
+        cp.dataRpc('.clear_display',self.addTime,combination_id='=.combination_id_for_entry',subscribe_saveTime=True,_lockSceen=True)
         
         cp.script("""var digit_manager = {
             store : function(path_to_store,digit){
@@ -365,7 +369,7 @@ class GnrCustomWebPage(object):
 
     def logoutToolbar(self,pane):
         bar = pane.slotToolbar('2,pageTitle,*,logoutButton,2',childname='upper',_class='slotbar_logout')
-        bar.pageTitle.div('^.current_full_name',font_weight='bold')
+        bar.pageTitle.div('^current_full_name',font_weight='bold')
         bar.logoutButton.button('Logout',action='genro.logout();')
 
     def entryToolbar(self,pane):
@@ -402,3 +406,33 @@ class GnrCustomWebPage(object):
                                         font_size = '15px',
                                         grid_showLineNumber=True
                                         )
+    def registering_page(self,pane):
+        main_bc=pane.borderContainer()
+     
+        tb=main_bc.tabContainer(region='center',tabPosition="top",selectedPage='^mycompetition.selectedPage',_class='tab_mobile')
+        
+        bc = tb.borderContainer(title='MY COMPETITION',datapath='mycompetition',pageName='mycompetition')
+        top=bc.contentPane(region='top',height='6%')
+        center=bc.contentPane(region='center',text_align='center')                                          # grid to show flight time already inserted
+        
+        cp=tb.contentPane(title='REGISTERING')
+
+        self.logoutToolbar(top)
+        self.myCompetition(center)
+        self.registeringCompetition(cp)
+        
+    def myCompetition(self,cp):
+        cp.dialogTableHandler(table='f3kp.competition',
+                                viewResource='ViewFromPilotMobile',
+                                formResource='Form_from_pilot',
+                                condition='@registration.pilot_id=:pr_pilot_id',
+                                condition_pr_pilot_id='^current_pilot_id',
+                                condition_onStart=True,
+                                addrow=False,delrow=False,
+                                liveUpdate=True) 
+    
+    def registeringCompetition(self,cp):
+        cp.plainTableHandler(table='f3kp.competition',
+                                datapath='main.competition',
+                                viewResource='ViewFromRegisteringMobile',
+                                condition_onStart=True)
