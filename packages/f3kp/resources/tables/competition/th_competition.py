@@ -119,7 +119,7 @@ class ViewFromRegisteringMobile(ViewFromPilot):
         r.cell('!![en]Action',calculated=True,format_buttonclass='gear iconbox',
                     format_isbutton=True,
                     format_onclick="""var row = this.widget.rowByIndex($1.rowIndex);
-                                    var pilot_id = this.getRelativeData('main.current_pilot_id');
+                                    var pilot_id = this.getRelativeData('current_pilot_id');
                                       PUBLISH do_action = {competition_id:row._pkey,pilot_id:pilot_id};""",
                     width='5em')
 
