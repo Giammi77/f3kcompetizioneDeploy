@@ -241,6 +241,8 @@ class Form_from_pilot_mobile(Form_from_pilot):
         fb.field('venue',readOnly=True)
         
         fb.field('short_note',colspan=2,readOnly=True)
+        self.combination(center_tb)
+        self.ranking(center_tb)
 
     def th_top_custom(self,top):
         bar=top.bar.replaceSlots('#','') 
