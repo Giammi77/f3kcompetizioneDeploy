@@ -1,6 +1,6 @@
 # encoding: utf-8
 import f3krules as rules
-
+from time import sleep
 class Table(object):
     def config_db(self,pkg):
         tbl=pkg.table('flight_time', pkey='id', name_long='!![en]Flight time', name_plural='!![en]Flight times',
@@ -145,24 +145,32 @@ class Table(object):
             combination.upgrade_time_registred(combination_id,True)
 
     def trigger_onDeleted(self, record=None):
-        
-        combination_id=record['combination_id']
-        check_if_flight_times= self.query(columns='$id,$combination_id',
-        where='$combination_id= :combination_id',
-        combination_id=combination_id).fetch()
-        if len(check_if_flight_times)==0:
-            combination=self.db.table('f3kp.combination')
-            combination.upgrade_time_registred(combination_id,False)
+        pass
+        # combination_id=record['combination_id']
+        # check_if_flight_times= self.query(columns='$id,$combination_id',
+        # where='$combination_id= :combination_id',
+        # combination_id=combination_id).fetch()
+        # if len(check_if_flight_times)==0:
+        #     combination=self.db.table('f3kp.combination')
+        #     combination.upgrade_time_registred(combination_id,False)
 
     def add_flight_time(self,combination_id=None,flight_time=None,*args,**kwargs):
         newFlight=self.newrecord(combination_id=combination_id,
                                         flight_time= flight_time)
         self.insert(newFlight)
         self.db.commit()
+        sleep(2)
+    def delTime(self,flight_time_id=None):
+        self.deleteSelection(columns='$id',
+                                where='$id=:flight_time_id',
+                                flight_time_id= flight_time_id)
+        self.db.commit()
+        sleep(2)
+
 
     def update_flight_time(self,flight_time_id=None,flight_time=None,*args,**kwargs):
         record=self.record(flight_time_id,mode='bag')
         record['flight_time']=flight_time
         self.update(record)
         self.db.commit()
-
+        sleep(2)

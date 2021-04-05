@@ -277,7 +277,7 @@ class GnrCustomWebPage(object):
         cel.button('6',action="genro.publish('insertDigit',{digit:6,selected_:'.selected_'})")
         cel=row.td()
         cel.button('+',action="""genro.publish('saveTime',{minutes:'^.minutes',seconds:'^.seconds',tenths:'^.tenths',
-                                selected_flight_time_id:'^.selected_flight_time_id'})""")
+                                selected_flight_time_id:'^.selected_flight_time_id'});genro.publish('aggiorna_selezione') """)
 
 
         row=tbody.tr()
@@ -289,8 +289,7 @@ class GnrCustomWebPage(object):
         cel.button('3',action="genro.publish('insertDigit',{digit:3,selected_:'.selected_'})")
         cel=row.td()
         cel.button('0',action="genro.publish('insertDigit',{digit:0,selected_:'.selected_'})")
-        
-
+        cel=row.td()   
 
         cp.dataController("""this.setRelativeData('.minutes','-');
                             this.setRelativeData('.seconds','-');
@@ -299,7 +298,8 @@ class GnrCustomWebPage(object):
                             
                          """,fire='^.clear_display')
 
-        cp.dataRpc('.clear_display',self.addTime,combination_id='=.combination_id_for_entry',subscribe_saveTime=True,_lockSceen=True)
+        cp.dataRpc('.clear_display',self.addTime,combination_id='=.combination_id_for_entry',subscribe_saveTime=True,
+                    _lockScreen=dict(message='Registering time'))
         
         cp.script("""var digit_manager = {
             store : function(path_to_store,digit){
@@ -340,6 +340,11 @@ class GnrCustomWebPage(object):
                             if (stored=='selected_tenths'){this.setRelativeData('.tenths',digit_manager.remove('entry.tenths'))}
                             """,subscribe_removeDigit=True)
 
+        cp.dataController("""var pilot_id= genro.getData('current_pilot_id');
+                                    genro.setData('current_pilot_id','');
+                                    genro.setData('current_pilot_id',pilot_id);
+                                """
+                                    ,subscribe_aggiorna_selezione=True)
 
     @public_method
     def addTime(self,combination_id,**kwargs):
@@ -362,10 +367,13 @@ class GnrCustomWebPage(object):
             flight_time+=0
         
         if not kwargs['selected_flight_time_id']: #try to save new flight_time
-             tbl_flight_time.add_flight_time(combination_id,flight_time)
-             return 
+            tbl_flight_time.add_flight_time(combination_id,flight_time)
+            return
+
+
         #else update existing
         tbl_flight_time.update_flight_time(kwargs['selected_flight_time_id'],flight_time)
+
 
     def logoutToolbar(self,pane):
         bar = pane.slotToolbar('2,pageTitle,*,logoutButton,2',childname='upper',_class='slotbar_logout')

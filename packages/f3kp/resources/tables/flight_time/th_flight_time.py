@@ -77,10 +77,22 @@ class ViewFromPilotMobile(ViewFromCombination):
 
         r.fieldcell('flight_time',edit=False,totalize=True,width='3em',name='Time')
         # r.cell('task_code',name='Task code')
-
+        r.cell('Delete',calculated=True,format_buttonclass='gear iconbox',
+                    format_isbutton=True,
+                    format_onclick="""var row = this.widget.rowByIndex($1.rowIndex);
+                                      PUBLISH do_action = {flight_time_id:row._pkey};""",
+                    width='3em')
     # def th_top_toolbar(self,top):
     #     top.div('ciaooooo')
 
+    def th_view(self,view):
+        view.dataRpc('dummy',self.delTime,subscribe_do_action=True,_lockScreen=dict(message='Deleting time'))
+        
+    @public_method
+    def delTime(self,flight_time_id=None):
+        tbl_flight_time=self.db.table('f3kp.flight_time')
+        tbl_flight_time.delTime(flight_time_id)
+        
     def th_top_custom(self,top):
         
         bar=top.bar.replaceSlots('#','2,view_title,*,delrow,2',font_size='20px')
