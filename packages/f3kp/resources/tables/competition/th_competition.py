@@ -205,7 +205,11 @@ class Form_from_pilot(Form):
         # self.competition_task(center_tb)
         self.combination(center_tb)
         self.ranking(center_tb)
-        
+        self.competition_task(center_tb)
+
+    def competition_task(self,tc):
+        tc.contentPane(title='!![en]Task').plainTableHandler(relation='@competition_task',
+                        viewResource='Viewcompetition_taskFromCompetition')
 
     def combination(self,tc):
         tc.contentPane(title='!![en]Combination').plainTableHandler(table='f3kp.combination',
@@ -243,6 +247,6 @@ class Form_from_pilot_mobile(Form_from_pilot):
         fb.field('short_note',colspan=2,readOnly=True)
         self.combination(center_tb)
         self.ranking(center_tb)
-
+        self.competition_task(center_tb)
     def th_top_custom(self,top):
         bar=top.bar.replaceSlots('#','') 
