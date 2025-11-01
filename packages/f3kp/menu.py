@@ -11,3 +11,8 @@ def config(root,application=None):
     f3k.lookups(u"!![en] Auxiliar Table", lookup_manager="f3kp")
     # contest_director = root.branch(u"!![en]Contest Director", pkg='contest')
 
+    dev = root.branch('Developer', tags='admin')
+    dev.packageBranch("System", pkg='sys', tags="admin")
+    dev.packageBranch("Admin", pkg='adm', tags="admin")
+    dev.packageBranch("Email", pkg='email', tags="admin")          
+    dev.packageBranch("Docu", pkg='docu', tags="admin")
