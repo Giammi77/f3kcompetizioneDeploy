@@ -4,6 +4,7 @@
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
 from time import sleep
+
 class View(BaseComponent):
 
     def th_struct(self,struct):
@@ -188,7 +189,7 @@ class Form(BaseComponent):
 
 
     def th_options(self):
-        return dict(dialog_height='600px', dialog_width='600px',delrow=False,addrow=False)
+        return dict(dialog_height='600px', dialog_width='600px')
 
 class Form_from_pilot(Form):
     #FORM FOR DESKTOP 

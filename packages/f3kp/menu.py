@@ -9,7 +9,7 @@ def config(root,application=None):
     f3k.thpage(u"!![en]Combination",table='f3kp.combination',formResource='FormCombination',viewResource='View_from_pilot')
     f3k.thpage(u"!![en]Flight Time",table='f3kp.flight_time')
     f3k.lookups(u"!![en] Auxiliar Table", lookup_manager="f3kp")
-    # contest_director = root.branch(u"!![en]Contest Director", pkg='contest')
+    contest_director = root.branch(u"!![en]Contest Director", pkg='contest')
 
     dev = root.branch('Developer', tags='admin')
     dev.packageBranch("System", pkg='sys', tags="admin")
