@@ -43,6 +43,9 @@ class Form(BaseComponent):
         
         fb = top.div(margin_left='40px',margin_right='70px').formbuilder(cols=2, border_spacing='4px',colswidth='auto',
                                             fld_width='100%')
+        fb.field('user_id')
+        fb.div()
+
         fb.field('last_name')
         fb.field('first_name')
         
