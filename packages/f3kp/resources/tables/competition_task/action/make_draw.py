@@ -17,7 +17,7 @@ class Main(BaseResourceAction):
         #per ottenere i record selezionati s=get_selection poi s.data()
         #
         #OTTENGO LE TASK SELEZIONATE GENERARE LE MATRICI
-        selection=self.get_selection(columns='competition_id,id,task_code,state_code,number_groups,_row_count')
+        selection=self.get_selection(columns='$competition_id,$id,$task_code,$state_code,$number_groups,$_row_count')
         
         #PER OGNI TASK TENGO DA PARTE I DATI DELLA TASK IN CASO DI NECESSITA'
         for e in selection:
